@@ -1,0 +1,2889 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>英雜｜八年級英文閱讀策略互動學習站</title>
+  <style>
+    :root {
+      --bg-page: #f0f4f8;
+      --blue-left-bg: #eef6ff;
+      --blue-left-border: #3b82f6;
+      --blue-right-bg: #f5f9ff;
+      --blue-right-border: #2563eb;
+      --primary: #1d4ed8;
+      --primary-light: #dbeafe;
+      --accent: #f59e0b;
+      --accent-bg: #fef3c7;
+      --success: #16a34a;
+      --success-bg: #dcfce7;
+      --danger: #dc2626;
+      --danger-bg: #fee2e2;
+      --text-main: #1e293b;
+      --text-muted: #64748b;
+      --card-bg: #ffffff;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: "Noto Sans TC", "Segoe UI", system-ui, -apple-system, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-page);
+      color: var(--text-main);
+      padding: 16px;
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+    }
+
+    /* ==================== 首頁大廳（英雜主選單） ==================== */
+    #homeView {
+      display: block;
+    }
+
+    .home-hero {
+      background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 60%, #0284c7 100%);
+      color: white;
+      padding: 28px 32px;
+      border-radius: 22px;
+      box-shadow: 0 10px 25px rgba(30, 58, 138, 0.2);
+      margin-bottom: 24px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 18px;
+    }
+
+    .brand-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255, 255, 255, 0.18);
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      padding: 4px 14px;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .home-hero h1 {
+      font-size: 2.3rem;
+      font-weight: 900;
+      letter-spacing: 2px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .home-hero p {
+      font-size: 1.02rem;
+      color: #e0f2fe;
+      margin-top: 6px;
+    }
+
+    .overall-progress-card {
+      background: rgba(255, 255, 255, 0.95);
+      color: #1e3a8a;
+      padding: 16px 22px;
+      border-radius: 16px;
+      min-width: 240px;
+      box-shadow: 0 4px 12px rgba(15, 23, 42, 0.12);
+    }
+
+    .overall-progress-title {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #475569;
+      margin-bottom: 4px;
+    }
+
+    .overall-progress-num {
+      font-size: 1.55rem;
+      font-weight: 900;
+      color: #1d4ed8;
+    }
+
+    .progress-track {
+      width: 100%;
+      height: 10px;
+      background: #e2e8f0;
+      border-radius: 999px;
+      overflow: hidden;
+      margin-top: 8px;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #2563eb, #16a34a);
+      width: 0%;
+      transition: width 0.35s ease;
+    }
+
+    .section-subtitle {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: #1e3a8a;
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .lesson-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 18px;
+      margin-bottom: 24px;
+    }
+
+    @media (max-width: 480px) {
+      .lesson-grid {
+        grid-template-columns: 1fr;
+      }
+      .home-hero h1 {
+        font-size: 1.85rem;
+      }
+    }
+
+    .lesson-card {
+      background: white;
+      border: 2px solid #cbd5e1;
+      border-radius: 18px;
+      padding: 20px;
+      cursor: pointer;
+      transition: all 0.22s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      box-shadow: 0 4px 12px rgba(15, 23, 42, 0.05);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .lesson-card:hover {
+      border-color: #2563eb;
+      transform: translateY(-4px);
+      box-shadow: 0 12px 24px rgba(37, 99, 235, 0.15);
+    }
+
+    .lesson-card.completed {
+      border-color: #22c55e;
+      background: linear-gradient(180deg, #f0fdf4 0%, #ffffff 35%);
+    }
+
+    .lesson-card.review-special {
+      border-color: #f59e0b;
+      background: linear-gradient(180deg, #fffbeb 0%, #ffffff 40%);
+    }
+
+    .lesson-card.review-special:hover {
+      border-color: #d97706;
+    }
+
+    .lesson-card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    .lesson-badge {
+      background: #dbeafe;
+      color: #1e40af;
+      font-weight: 800;
+      font-size: 0.85rem;
+      padding: 4px 12px;
+      border-radius: 999px;
+    }
+
+    .lesson-card.review-special .lesson-badge {
+      background: #fef3c7;
+      color: #b45309;
+    }
+
+    .lesson-page-tag {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: #64748b;
+      background: #f1f5f9;
+      padding: 3px 10px;
+      border-radius: 8px;
+    }
+
+    .lesson-card-title {
+      font-size: 1.18rem;
+      font-weight: 800;
+      color: #0f172a;
+      margin-bottom: 6px;
+      line-height: 1.4;
+    }
+
+    .lesson-card-desc {
+      font-size: 0.9rem;
+      color: #475569;
+      margin-bottom: 16px;
+      flex: 1;
+    }
+
+    .lesson-card-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 12px;
+      border-top: 1px dashed #cbd5e1;
+    }
+
+    .lesson-status {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #2563eb;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .lesson-status.done {
+      color: #16a34a;
+    }
+
+    .enter-pill {
+      background: #2563eb;
+      color: white;
+      font-size: 0.85rem;
+      font-weight: 700;
+      padding: 6px 14px;
+      border-radius: 999px;
+      transition: background 0.2s;
+    }
+
+    .lesson-card:hover .enter-pill {
+      background: #1d4ed8;
+    }
+
+    .lesson-card.review-special .enter-pill {
+      background: #d97706;
+    }
+
+    /* ==================== 課程學習畫面（SPA 切換） ==================== */
+    #lessonView {
+      display: none;
+    }
+
+    /* 頂部標題與策略導覽列（含左上角返回鍵） */
+    header.lesson-header {
+      background: linear-gradient(135deg, #1e3a8a, #2563eb);
+      color: white;
+      padding: 14px 20px;
+      border-radius: 16px;
+      box-shadow: 0 4px 12px rgba(30, 58, 138, 0.15);
+      margin-bottom: 16px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .header-left-group {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    /* 左上角返回鍵 */
+    .btn-back {
+      background: #ffffff;
+      color: #1e3a8a;
+      border: 2px solid #93c5fd;
+      padding: 9px 16px;
+      border-radius: 12px;
+      font-size: 0.98rem;
+      font-weight: 800;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: 0 3px 8px rgba(15, 23, 42, 0.18);
+      transition: all 0.18s ease;
+      white-space: nowrap;
+    }
+
+    .btn-back:hover {
+      background: #fef08a;
+      border-color: #eab308;
+      color: #854d0e;
+      transform: translateX(-2px);
+    }
+
+    .btn-back:active {
+      transform: scale(0.96);
+    }
+
+    .header-title h1 {
+      font-size: 1.28rem;
+      font-weight: 800;
+      letter-spacing: 0.4px;
+    }
+
+    .header-title p {
+      font-size: 0.88rem;
+      color: #dbeafe;
+      margin-top: 2px;
+    }
+
+    .strategy-banner {
+      background: rgba(255, 255, 255, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      padding: 8px 14px;
+      border-radius: 12px;
+      font-size: 0.86rem;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .strategy-step {
+      background: rgba(255, 255, 255, 0.92);
+      color: #1e3a8a;
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-weight: 700;
+      font-size: 0.8rem;
+    }
+
+    /* 左右雙欄主配置 */
+    .main-grid {
+      display: grid;
+      grid-template-columns: 1.05fr 1.15fr;
+      gap: 18px;
+      align-items: start;
+    }
+
+    @media (max-width: 960px) {
+      .main-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* 左側藍框：文章區 */
+    .left-panel {
+      background: var(--blue-left-bg);
+      border: 3px solid var(--blue-left-border);
+      border-radius: 18px;
+      padding: 20px;
+      box-shadow: 0 6px 16px rgba(59, 130, 246, 0.12);
+    }
+
+    .panel-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 14px;
+      padding-bottom: 10px;
+      border-bottom: 2px dashed #93c5fd;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .panel-title {
+      font-size: 1.12rem;
+      font-weight: 800;
+      color: #1e3a8a;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .tts-controls {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .btn-tts {
+      background: #2563eb;
+      color: white;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      transition: all 0.2s;
+      box-shadow: 0 2px 6px rgba(37, 99, 235, 0.25);
+    }
+
+    .btn-tts:hover {
+      background: #1d4ed8;
+      transform: translateY(-1px);
+    }
+
+    .btn-tts:active {
+      transform: scale(0.96);
+    }
+
+    .btn-tts.stop {
+      background: #ef4444;
+    }
+
+    .speed-select {
+      padding: 5px 8px;
+      border-radius: 14px;
+      border: 1px solid #93c5fd;
+      background: white;
+      color: #1e3a8a;
+      font-size: 0.82rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    /* 視覺線索圖卡區 */
+    .clue-cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    @media (max-width: 520px) {
+      .clue-cards {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .clue-card {
+      background: white;
+      border: 2px solid #bfdbfe;
+      border-radius: 12px;
+      padding: 10px 8px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .clue-card:hover {
+      border-color: #3b82f6;
+      transform: translateY(-2px);
+    }
+
+    .clue-card.checked {
+      background: #fef9c3;
+      border-color: #eab308;
+    }
+
+    .clue-icon {
+      font-size: 1.55rem;
+      display: block;
+      margin-bottom: 2px;
+    }
+
+    .clue-label {
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: #1e40af;
+    }
+
+    .clue-sub {
+      font-size: 0.74rem;
+      color: var(--text-muted);
+    }
+
+    /* 第 7 堂跨單元總覽對照表 */
+    .summary-table-wrap {
+      background: white;
+      border: 2px solid #93c5fd;
+      border-radius: 12px;
+      padding: 10px;
+      margin-bottom: 14px;
+      overflow-x: auto;
+    }
+
+    .summary-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.82rem;
+      text-align: left;
+    }
+
+    .summary-table th {
+      background: #dbeafe;
+      color: #1e3a8a;
+      padding: 6px 8px;
+      border-bottom: 2px solid #93c5fd;
+    }
+
+    .summary-table td {
+      padding: 6px 8px;
+      border-bottom: 1px solid #e2e8f0;
+      color: #334155;
+    }
+
+    .unit-tag {
+      display: inline-block;
+      background: #1d4ed8;
+      color: white;
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 1px 6px;
+      border-radius: 6px;
+      margin-right: 4px;
+    }
+
+    .unit-tag.u8 { background: #0f766e; }
+    .unit-tag.u9 { background: #b45309; }
+
+    /* 課文閱讀區塊 */
+    .article-box {
+      background: white;
+      border-radius: 14px;
+      padding: 16px;
+      border: 1px solid #bfdbfe;
+    }
+
+    .article-heading {
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: #1e3a8a;
+      background: #eff6ff;
+      padding: 8px 12px;
+      border-radius: 8px;
+      margin-bottom: 10px;
+      border-left: 4px solid #2563eb;
+    }
+
+    .unit-divider {
+      font-size: 0.85rem;
+      font-weight: 800;
+      color: #1e3a8a;
+      background: #eff6ff;
+      padding: 5px 10px;
+      border-radius: 8px;
+      margin: 10px 0 6px 0;
+      border-left: 4px solid #2563eb;
+    }
+
+    .unit-divider:first-child {
+      margin-top: 0;
+    }
+
+    .stage-note {
+      font-size: 0.86rem;
+      color: #475569;
+      font-style: italic;
+      background: #f1f5f9;
+      padding: 6px 12px;
+      border-radius: 8px;
+      margin: 10px 0 8px 0;
+      border-left: 4px solid #94a3b8;
+    }
+
+    .stage-note:first-child {
+      margin-top: 0;
+    }
+
+    .sentence-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 8px 10px;
+      margin-bottom: 6px;
+      border-radius: 10px;
+      border: 2px solid transparent;
+      transition: all 0.2s;
+      cursor: pointer;
+    }
+
+    .sentence-row:hover {
+      background: #f8fafc;
+      border-color: #cbd5e1;
+    }
+
+    .sentence-row.seek-mode {
+      border: 2px dashed #93c5fd;
+      background: #f8fbff;
+    }
+
+    .sentence-row.seek-mode:hover {
+      border-color: #f59e0b;
+      background: #fffbeb;
+    }
+
+    .sentence-row.evidence-correct {
+      background: #fef08a !important;
+      border: 2px solid #eab308 !important;
+      box-shadow: 0 2px 8px rgba(234, 179, 8, 0.25);
+    }
+
+    .sentence-row.evidence-wrong {
+      background: #fee2e2;
+      border-color: #ef4444;
+      animation: shake 0.35s;
+    }
+
+    .sentence-row.speaking {
+      background: #dbeafe;
+      border-color: #2563eb;
+    }
+
+    .mini-speak-btn {
+      background: #eff6ff;
+      color: #2563eb;
+      border: 1px solid #bfdbfe;
+      border-radius: 50%;
+      width: 32px;
+      height: 32px;
+      min-width: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 0.95rem;
+      transition: all 0.15s;
+      margin-top: 2px;
+    }
+
+    .mini-speak-btn:hover {
+      background: #2563eb;
+      color: white;
+    }
+
+    .mini-speak-btn:active {
+      transform: scale(0.9);
+      background: #1d4ed8;
+      color: white;
+    }
+
+    .dialogue-text {
+      font-size: 1.04rem;
+      color: #0f172a;
+      flex: 1;
+    }
+
+    .zh-sub {
+      display: block;
+      font-size: 0.85rem;
+      color: #64748b;
+      margin-top: 2px;
+      font-weight: 400;
+    }
+
+    body.hide-zh .zh-sub {
+      display: none;
+    }
+
+    .speaker-name {
+      font-weight: 800;
+      color: #1d4ed8;
+      margin-right: 4px;
+    }
+
+    .speaker-name.mike {
+      color: #0f766e;
+    }
+
+    .phrase-highlight {
+      border-bottom: 2px dashed #2563eb;
+      font-weight: 600;
+      color: #1e40af;
+    }
+
+    .clue-number {
+      background: #fef3c7;
+      color: #b45309;
+      padding: 0 5px;
+      border-radius: 5px;
+      font-weight: 700;
+    }
+
+    /* 右側藍框：片語與閱讀測驗區 */
+    .right-panel {
+      background: var(--blue-right-bg);
+      border: 3px solid var(--blue-right-border);
+      border-radius: 18px;
+      padding: 20px;
+      box-shadow: 0 6px 16px rgba(37, 99, 235, 0.12);
+    }
+
+    .phrase-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+
+    @media (max-width: 540px) {
+      .phrase-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .phrase-card {
+      background: white;
+      border: 2px solid #93c5fd;
+      border-radius: 12px;
+      padding: 10px 12px;
+      cursor: pointer;
+      transition: all 0.2s;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .phrase-card:hover {
+      border-color: #2563eb;
+      box-shadow: 0 4px 10px rgba(37, 99, 235, 0.12);
+    }
+
+    .phrase-card.revealed {
+      background: #eff6ff;
+      border-color: #1d4ed8;
+    }
+
+    .phrase-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .phrase-en {
+      font-size: 1.02rem;
+      font-weight: 800;
+      color: #1e3a8a;
+    }
+
+    .phrase-kk {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      font-family: "Lucida Sans Unicode", sans-serif;
+    }
+
+    .phrase-meaning {
+      margin-top: 6px;
+      padding-top: 6px;
+      border-top: 1px dashed #bfdbfe;
+      font-size: 0.9rem;
+      color: #334155;
+    }
+
+    .phrase-hidden-hint {
+      color: #3b82f6;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+
+    /* 閱讀測驗闖關區 */
+    .quiz-container {
+      background: white;
+      border-radius: 14px;
+      padding: 18px;
+      border: 2px solid #bfdbfe;
+    }
+
+    .quiz-progress-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 14px;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .q-tabs {
+      display: flex;
+      gap: 6px;
+    }
+
+    .q-tab {
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      border: 2px solid #cbd5e1;
+      background: #f8fafc;
+      color: #475569;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .q-tab.active {
+      border-color: #2563eb;
+      background: #2563eb;
+      color: white;
+    }
+
+    .q-tab.done {
+      border-color: #16a34a;
+      background: #dcfce7;
+      color: #15803d;
+    }
+
+    .q-type-badge {
+      background: #e0e7ff;
+      color: #3730a3;
+      padding: 4px 10px;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      font-weight: 700;
+    }
+
+    .step-tracker {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+
+    .step-pill {
+      background: #f1f5f9;
+      border: 2px solid #e2e8f0;
+      border-radius: 10px;
+      padding: 8px;
+      text-align: center;
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: #64748b;
+      transition: all 0.2s;
+    }
+
+    .step-pill.current {
+      background: #fef3c7;
+      border-color: #f59e0b;
+      color: #92400e;
+      box-shadow: 0 2px 6px rgba(245, 158, 11, 0.2);
+    }
+
+    .step-pill.completed {
+      background: #dcfce7;
+      border-color: #22c55e;
+      color: #166534;
+    }
+
+    .question-box {
+      background: #f8fafc;
+      border: 2px solid #cbd5e1;
+      border-radius: 12px;
+      padding: 14px;
+      margin-bottom: 14px;
+    }
+
+    .instruction-banner {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: #b45309;
+      background: #fef3c7;
+      padding: 6px 12px;
+      border-radius: 8px;
+      margin-bottom: 10px;
+    }
+
+    .instruction-banner.step2 {
+      color: #1d4ed8;
+      background: #dbeafe;
+    }
+
+    .instruction-banner.step3 {
+      color: #15803d;
+      background: #dcfce7;
+    }
+
+    .q-tokens {
+      font-size: 1.12rem;
+      font-weight: 700;
+      color: #0f172a;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      align-items: center;
+    }
+
+    .word-token {
+      padding: 3px 8px;
+      border-radius: 8px;
+      border: 2px solid transparent;
+      cursor: pointer;
+      transition: all 0.15s;
+      user-select: none;
+    }
+
+    .word-token:hover {
+      background: #e2e8f0;
+    }
+
+    .word-token.circled {
+      background: #fef08a;
+      border: 2px solid #eab308;
+      color: #854d0e;
+      border-radius: 20px;
+      box-shadow: 0 2px 4px rgba(234, 179, 8, 0.3);
+    }
+
+    .word-token.wrong-word {
+      animation: shake 0.3s;
+      background: #fee2e2;
+    }
+
+    .options-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      position: relative;
+    }
+
+    .options-locked-overlay {
+      background: rgba(248, 250, 252, 0.88);
+      border: 2px dashed #94a3b8;
+      border-radius: 12px;
+      padding: 18px;
+      text-align: center;
+      color: #475569;
+      font-weight: 700;
+      font-size: 0.95rem;
+    }
+
+    .option-btn {
+      width: 100%;
+      text-align: left;
+      padding: 11px 14px;
+      border-radius: 10px;
+      border: 2px solid #cbd5e1;
+      background: white;
+      font-size: 0.98rem;
+      font-weight: 600;
+      color: #1e293b;
+      cursor: pointer;
+      transition: all 0.15s;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .option-btn:hover:not(:disabled) {
+      border-color: #2563eb;
+      background: #eff6ff;
+    }
+
+    .option-btn.correct {
+      background: #dcfce7;
+      border-color: #16a34a;
+      color: #14532d;
+    }
+
+    .option-btn.wrong {
+      background: #fee2e2;
+      border-color: #dc2626;
+      color: #7f1d1d;
+    }
+
+    .feedback-box {
+      margin-top: 12px;
+      padding: 12px 14px;
+      border-radius: 10px;
+      font-size: 0.92rem;
+      display: none;
+    }
+
+    .feedback-box.show {
+      display: block;
+    }
+
+    .feedback-box.success {
+      background: #dcfce7;
+      border: 1px solid #86efac;
+      color: #14532d;
+    }
+
+    .feedback-box.error {
+      background: #fee2e2;
+      border: 1px solid #fca5a5;
+      color: #7f1d1d;
+    }
+
+    .next-btn {
+      margin-top: 12px;
+      background: #2563eb;
+      color: white;
+      border: none;
+      padding: 10px 18px;
+      border-radius: 10px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: none;
+      width: 100%;
+    }
+
+    .next-btn.show {
+      display: block;
+    }
+
+    .next-btn:hover {
+      background: #1d4ed8;
+    }
+
+    /* 總結獎盃畫面 */
+    .summary-card {
+      display: none;
+      text-align: center;
+      padding: 24px 16px;
+      background: linear-gradient(180deg, #eff6ff 0%, #ffffff 100%);
+      border-radius: 14px;
+      border: 2px solid #3b82f6;
+    }
+
+    .summary-card.show {
+      display: block;
+    }
+
+    .summary-actions {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-5px); }
+      75% { transform: translateX(5px); }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- ==================== 1. 首頁大廳（英雜主選單） ==================== -->
+    <div id="homeView">
+      <div class="home-hero">
+        <div>
+          <div class="brand-badge">📚 國中八年級英文閱讀策略互動學習站</div>
+          <h1>📖 英雜</h1>
+          <p>Unit 7 – Unit 9 全系列 7 堂課｜真人語音朗讀 × 關鍵字圈選 × 證據句定位闖關</p>
+        </div>
+        <div class="overall-progress-card">
+          <div class="overall-progress-title">🎯 全系列總答題進度</div>
+          <div class="overall-progress-num" id="overallProgressText">0 / 28 題完成</div>
+          <div class="progress-track">
+            <div class="progress-fill" id="overallProgressBar"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section-subtitle">
+        <span>✨ 請選擇要進入的課程（點擊卡片立即開始學習）：</span>
+        <span style="font-size:0.86rem; color:#64748b; font-weight:600;">💡 進入後隨時可按左上角「🔙 返回」切換其他堂數</span>
+      </div>
+
+      <div class="lesson-grid" id="lessonGrid"></div>
+    </div>
+
+    <!-- ==================== 2. 單堂課程互動介面 ==================== -->
+    <div id="lessonView">
+      <header class="lesson-header">
+        <div class="header-left-group">
+          <button type="button" class="btn-back" id="backHomeBtn" title="返回英雜課程選單">
+            🔙 返回
+          </button>
+          <div class="header-title">
+            <h1 id="lessonHeaderTitle">課程標題</h1>
+            <p id="lessonHeaderSub">副標題</p>
+          </div>
+        </div>
+        <div class="strategy-banner" id="strategyBanner">
+          <span>🎯 閱讀四步驟：</span>
+          <span class="strategy-step">① 看圖表/線索</span>
+          <span class="strategy-step">② 圈題目關鍵字</span>
+          <span class="strategy-step">③ 找文章證據句</span>
+          <span class="strategy-step">④ 選正確答案</span>
+        </div>
+      </header>
+
+      <div class="main-grid">
+        <!-- 左側藍框：閱讀文章區 -->
+        <section class="left-panel">
+          <div class="panel-header">
+            <div class="panel-title" id="leftPanelTitle">📖 課文閱讀區（點擊句子可找證據）</div>
+            <div class="tts-controls">
+              <select id="voiceSelect" class="speed-select" title="選擇英文語音" style="max-width:140px;">
+                <option value="">預設英文語音</option>
+              </select>
+              <select id="speechRate" class="speed-select" title="調整朗讀語速">
+                <option value="0.75">🐢 慢速 0.75x</option>
+                <option value="0.95" selected>🚶 正常 1.0x</option>
+                <option value="1.15">🐇 快速 1.15x</option>
+              </select>
+              <button type="button" class="btn-tts" style="background:#0f766e;" id="testVoiceBtn">
+                🔔 測試聲音
+              </button>
+              <button type="button" class="btn-tts" style="background:#475569;" id="toggleZhBtn">
+                🙈 隱藏中文
+              </button>
+              <button type="button" class="btn-tts" id="readAllBtn">
+                🔊 全文朗讀
+              </button>
+            </div>
+            <div id="ttsStatus" style="width:100%; font-size:0.8rem; color:#1e40af; background:#dbeafe; padding:6px 10px; border-radius:8px; margin-top:4px;">
+              💡 狀態列：請先掃描讀前線索，再按「🔊」小喇叭聽發音！
+            </div>
+          </div>
+
+          <!-- 步驟 ① 讀前線索（圖卡或第7堂表格） -->
+          <div id="preReadSection"></div>
+
+          <!-- 課文逐句互動區 -->
+          <div class="article-box" id="articleBox"></div>
+        </section>
+
+        <!-- 右側藍框：片語提示與四題闖關區 -->
+        <section class="right-panel">
+          <div class="panel-header">
+            <div class="panel-title" id="rightPhraseTitle">💡 本課核心片語（點小喇叭聽發音／點卡片看中文）</div>
+          </div>
+
+          <div class="phrase-grid" id="phraseGrid"></div>
+
+          <div class="panel-header" style="margin-top: 6px;">
+            <div class="panel-title" id="rightQuizTitle">🎯 閱讀理解闖關（共 4 題）</div>
+            <span id="scoreBadge" style="background:#dbeafe; color:#1e3a8a; padding:4px 12px; border-radius:20px; font-weight:800; font-size:0.85rem;">
+              完成進度：0 / 4
+            </span>
+          </div>
+
+          <div class="quiz-container" id="quizContainer">
+            <div class="quiz-progress-bar">
+              <div class="q-tabs" id="qTabs">
+                <button type="button" class="q-tab active" data-qidx="0">第 1 題</button>
+                <button type="button" class="q-tab" data-qidx="1">第 2 題</button>
+                <button type="button" class="q-tab" data-qidx="2">第 3 題</button>
+                <button type="button" class="q-tab" data-qidx="3">第 4 題</button>
+              </div>
+              <span class="q-type-badge" id="qTypeBadge">題型</span>
+            </div>
+
+            <div class="step-tracker">
+              <div class="step-pill current" id="stepPill1">步驟 1：圈題目關鍵字</div>
+              <div class="step-pill" id="stepPill2">步驟 2：找文章證據句</div>
+              <div class="step-pill" id="stepPill3">步驟 3：選出正確答案</div>
+            </div>
+
+            <div class="question-box">
+              <div class="instruction-banner" id="instructionBanner">
+                👉 請先在下方題目中，點擊「關鍵字」把它圈起來！
+              </div>
+              <div style="display:flex; align-items:flex-start; gap:8px;">
+                <button type="button" class="mini-speak-btn" id="speakQuestionBtn" title="朗讀題目">🔊</button>
+                <div class="q-tokens" id="qTokens"></div>
+              </div>
+            </div>
+
+            <div class="options-list" id="optionsList"></div>
+            <div class="feedback-box" id="feedbackBox"></div>
+            <button type="button" class="next-btn" id="nextBtn">前往下一題 ➔</button>
+          </div>
+
+          <div class="summary-card" id="summaryCard"></div>
+        </section>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ==================== 1. 全部 7 堂課完整資料庫 ====================
+    var LESSONS = [
+      // -------------------- 第 1 堂 --------------------
+      {
+        id: "lesson1",
+        badge: "第 1 堂",
+        unitTitle: "Unit 7 Part 1: At the Laundromat",
+        pageTag: "課本 P.36",
+        cardDesc: "自助洗衣店對話、陰雨天衣物狀態、頻率副詞位置與烘衣機情境理解。",
+        headerTitle: "📘 第 1 堂｜Unit 7 Part 1: At the Laundromat",
+        headerSub: "八年級閱讀策略互動站（課本 P.36）｜點擊小喇叭可聽真人語音朗讀",
+        strategySteps: ["① 看圖表/線索", "② 圈題目關鍵字", "③ 找文章證據句", "④ 選正確答案"],
+        leftPanelTitle: "📖 課文閱讀區（點擊句子可找證據）",
+        initialStatus: "💡 狀態列：請先按「🔔 測試聲音」或任意「🔊」喇叭按鈕測試發音。",
+        testPhrase: "Hello! Ready to learn English.",
+        preReadTitle: "👀 步驟 ① 讀前掃描線索（點擊圖卡觀察情境）：",
+        preReadType: "cards",
+        clueCards: [
+          { icon: "🌧️👕", label: "天氣與衣物狀態", sub: "cold, rainy / wet &amp; musty" },
+          { icon: "🧺⏳", label: "烘衣機使用狀況", sub: "All in use → almost done" },
+          { icon: "🔥⏰", label: "烘乾設定與取件", sub: "high heat / pick up later" }
+        ],
+        articleItems: [
+          { type: "note", html: "（Claire carries her clothes in from the balcony.）<span class=\"zh-sub\">（克萊兒把衣服從陽台收進來。）</span>" },
+          { type: "sentence", sid: "s1", text: "I hung these clothes up days ago. They are still wet and musty!", html: "<span class=\"speaker-name\">Claire:</span> I hung these clothes up <span class=\"clue-number\">days ago</span>. They're still wet and musty!<span class=\"zh-sub\">我幾天前就把這些衣服掛起來了。它們還是又濕又有黴味！</span>" },
+          { type: "sentence", sid: "s2", text: "Yeah ... the cold, rainy weather is to blame.", html: "<span class=\"speaker-name mike\">Mike:</span> Yeah ... the cold, rainy weather <span class=\"phrase-highlight\">is to blame</span>.<span class=\"zh-sub\">是啊……這又冷又下雨的天氣是罪魁禍首。</span>" },
+          { type: "sentence", sid: "s3", text: "Ugh, clothes never dry in this weather.", html: "<span class=\"speaker-name\">Claire:</span> Ugh, clothes <span class=\"clue-number\">never</span> dry in this weather.<span class=\"zh-sub\">唉，這種天氣衣服根本不會乾。</span>" },
+          { type: "sentence", sid: "s4", text: "Let us dry them at the laundromat.", html: "<span class=\"speaker-name mike\">Mike:</span> Let's dry them at the laundromat.<span class=\"zh-sub\">我們去自助洗衣店把衣服烘乾吧。</span>" },
+          { type: "sentence", sid: "s5", text: "Good idea!", html: "<span class=\"speaker-name\">Claire:</span> Good idea!<span class=\"zh-sub\">好主意！</span>" },
+          { type: "note", html: "（They arrive at a busy laundromat.）<span class=\"zh-sub\">（他們來到一家忙碌的自助洗衣店。）</span>" },
+          { type: "sentence", sid: "s6", text: "Oh, no! All the dryers are in use.", html: "<span class=\"speaker-name mike\">Mike:</span> Oh, no! <span class=\"clue-number\">All</span> the dryers are <span class=\"phrase-highlight\">in use</span>.<span class=\"zh-sub\">喔，不！所有的烘衣機都在使用中。</span>" },
+          { type: "sentence", sid: "s7", text: "This one is almost done. Let us wait here.", html: "<span class=\"speaker-name\">Claire:</span> This one is almost done. Let's wait here.<span class=\"zh-sub\">這一台快好了。我們在這裡等吧。</span>" },
+          { type: "note", html: "（A few minutes later, it's their turn. They put the clothes in the dryer.）<span class=\"zh-sub\">（幾分鐘後，輪到他們了。他們把衣服放進烘衣機。）</span>" },
+          { type: "sentence", sid: "s8", text: "I will use high heat. I want my clothes to be totally dry!", html: "<span class=\"speaker-name\">Claire:</span> I'll use <span class=\"phrase-highlight\">high heat</span>. I want my clothes to be totally dry!<span class=\"zh-sub\">我要用高溫。我想讓我的衣服完全乾燥！</span>" },
+          { type: "sentence", sid: "s9", text: "OK, let us come back later to pick them up.", html: "<span class=\"speaker-name mike\">Mike:</span> OK, let's come back later to <span class=\"phrase-highlight\">pick them up</span>.<span class=\"zh-sub\">好，我們晚點再回來拿衣服。</span>" }
+        ],
+        phraseSectionTitle: "💡 本課核心片語（點小喇叭聽發音／點卡片看中文）",
+        phrases: [
+          { speak: "be to blame", en: "be to blame", kk: "[bi tə blem]", zhTitle: "是……的原因（該受責怪）", zhEx: "例：The rainy weather is to blame." },
+          { speak: "in use", en: "in use", kk: "[ɪn juz]", zhTitle: "在使用中", zhEx: "例：All the dryers are in use." },
+          { speak: "It is their turn.", en: "one's turn", kk: "[wʌnz tɝn]", zhTitle: "輪到某人的機會", zhEx: "例：It's their turn to use the dryer." },
+          { speak: "pick up", en: "pick up", kk: "[pɪk ʌp]", zhTitle: "領取；拿取（代名詞放中間）", zhEx: "例：come back later to pick them up" }
+        ],
+        quizSectionTitle: "🎯 閱讀理解闖關（共 4 題）",
+        summaryIcon: "🏆",
+        summaryTitle: "太棒了！完成第 1 堂閱讀挑戰！",
+        summaryDesc: "你已經學會運用「<strong>看線索 → 圈題目關鍵字 → 找文章證據句 → 選答案</strong>」破解英文對話！",
+        summaryGrammar: "<strong>📌 本堂文法小複習：</strong><br>1. 頻率副詞放一般動詞前：Clothes <strong>never</strong> dry in this weather.<br>2. 希望某物呈現某狀態：I <strong>want</strong> my clothes <strong>to be</strong> totally dry!",
+        questions: [
+          {
+            type: "題型：主旨理解",
+            questionText: "What are Claire and Mike mainly talking about?",
+            tokens: [
+              { word: "What", isKey: true }, { word: "are", isKey: false }, { word: "Claire", isKey: false },
+              { word: "and", isKey: false }, { word: "Mike", isKey: false }, { word: "mainly", isKey: true },
+              { word: "talking", isKey: false }, { word: "about?", isKey: false }
+            ],
+            keyHint: "提示：主旨題要找疑問詞「What（什麼）」和「mainly（主要地）」！",
+            targetSentences: ["s4"],
+            evidenceHint: "提示：請在左側文章點出 Mike 提議「要去哪裡把衣服弄乾」的那一句！",
+            options: [
+              { text: "(A) Buying new clothes on a rainy day.", correct: false },
+              { text: "(B) Drying wet clothes at a laundromat.", correct: true },
+              { text: "(C) Cleaning a dirty washing machine.", correct: false },
+              { text: "(D) Waiting for the sun on the balcony.", correct: false }
+            ],
+            explanation: "✅ 正確答案是 (B)！從關鍵字 mainly（主要）可定位到第 4 句 Mike 說：'Let's dry them at the laundromat.'（我們去自助洗衣店烘乾衣服吧），整段對話都在圍繞這件事。"
+          },
+          {
+            type: "題型：因果推論",
+            questionText: "Why are Claire's clothes still wet and musty?",
+            tokens: [
+              { word: "Why", isKey: true }, { word: "are", isKey: false }, { word: "Claire's", isKey: false },
+              { word: "clothes", isKey: false }, { word: "still", isKey: false }, { word: "wet", isKey: true },
+              { word: "and", isKey: false }, { word: "musty?", isKey: true }
+            ],
+            keyHint: "提示：問原因要圈出「Why（為什麼）」以及衣服狀態「wet（濕的）」、「musty（有黴味的）」！",
+            targetSentences: ["s2"],
+            evidenceHint: "提示：在左側文章找出包含「is to blame（是……的原因）」的那一句！",
+            options: [
+              { text: "(A) She forgot to wash them.", correct: false },
+              { text: "(B) The dryer at home is broken.", correct: false },
+              { text: "(C) The weather is cold and rainy.", correct: true },
+              { text: "(D) She hung them up ten minutes ago.", correct: false }
+            ],
+            explanation: "✅ 正確答案是 (C)！題目問 Why（為什麼），對應文章第 2 句：'...the cold, rainy weather is to blame.'（又冷又下雨的天氣是罪魁禍首）。"
+          },
+          {
+            type: "題型：細節定位",
+            questionText: "Why do Claire and Mike wait at the laundromat?",
+            tokens: [
+              { word: "Why", isKey: true }, { word: "do", isKey: false }, { word: "Claire", isKey: false },
+              { word: "and", isKey: false }, { word: "Mike", isKey: false }, { word: "wait", isKey: true },
+              { word: "at", isKey: false }, { word: "the", isKey: false }, { word: "laundromat?", isKey: false }
+            ],
+            keyHint: "提示：請圈出疑問詞「Why（為什麼）」和動作「wait（等待）」！",
+            targetSentences: ["s6", "s7"],
+            evidenceHint: "提示：在左側文章找出提到「烘衣機都在使用中（in use）」或「快好了（almost done）」的句子！",
+            options: [
+              { text: "(A) They don't have enough money.", correct: false },
+              { text: "(B) All the dryers are in use.", correct: true },
+              { text: "(C) The laundromat is not open yet.", correct: false },
+              { text: "(D) They are waiting for their friends.", correct: false }
+            ],
+            explanation: "✅ 正確答案是 (B)！文章第 6 句指出 'All the dryers are in use.'（所有烘衣機都在使用中），所以他們才需要在現場等輪到他們（their turn）。"
+          },
+          {
+            type: "題型：細節與目的推論",
+            questionText: "Why does Claire use high heat to dry her clothes?",
+            tokens: [
+              { word: "Why", isKey: true }, { word: "does", isKey: false }, { word: "Claire", isKey: false },
+              { word: "use", isKey: false }, { word: "high", isKey: true }, { word: "heat", isKey: true },
+              { word: "to", isKey: false }, { word: "dry", isKey: false }, { word: "her", isKey: false },
+              { word: "clothes?", isKey: false }
+            ],
+            keyHint: "提示：請圈出「Why（為什麼）」和設定關鍵字「high（高的）」、「heat（熱度）」！",
+            targetSentences: ["s8"],
+            evidenceHint: "提示：在左側文章找出 Claire 說出「high heat」的那一句！",
+            options: [
+              { text: "(A) She wants her clothes to be totally dry.", correct: true },
+              { text: "(B) She wants to make her new shirt smaller.", correct: false },
+              { text: "(C) High heat is cheaper at the laundromat.", correct: false },
+              { text: "(D) Mike asks her to use high heat.", correct: false }
+            ],
+            explanation: "✅ 正確答案是 (A)！文章第 8 句 Claire 說：'I'll use high heat. I want my clothes to be totally dry!'（我要用高溫，我想讓衣服完全乾燥！）。"
+          }
+        ]
+      },
+
+      // -------------------- 第 2 堂 --------------------
+      {
+        id: "lesson2",
+        badge: "第 2 堂",
+        unitTitle: "Unit 7 Part 2: The Care Label",
+        pageTag: "課本 P.37",
+        cardDesc: "衣物洗標符號圖示（不可滾筒烘乾）、衣服縮水因果推論與祈使句＋or 句型。",
+        headerTitle: "📘 第 2 堂｜Unit 7 Part 2: The Care Label",
+        headerSub: "八年級閱讀策略互動站（課本 P.37）｜點擊小喇叭可聽真人語音朗讀",
+        strategySteps: ["① 看圖表/符號", "② 圈題目關鍵字", "③ 找文章證據句", "④ 選正確答案"],
+        leftPanelTitle: "📖 課文閱讀區（點擊句子可找證據）",
+        initialStatus: "💡 狀態列：請按「🔊」小喇叭聽發音，並先觀察下方「洗標符號圖卡」！",
+        testPhrase: "Do not tumble dry!",
+        preReadTitle: "👀 步驟 ① 讀前觀察圖表與洗標符號（點擊圖卡放大重點）：",
+        preReadType: "cards",
+        clueCards: [
+          { icon: "👕➡️🤏", label: "新襯衫縮水了", sub: "shrank to kids' sizes" },
+          {
+            isSvgCareLabel: true,
+            label: "洗標符號圖卡",
+            sub: "方框＋圓圈＋大X"
+          },
+          { icon: "🚫🌀🔥", label: "符號真實意義", sub: "Do not tumble dry" }
+        ],
+        articleItems: [
+          { type: "note", html: "（Later that day, Claire is folding her clothes.）<span class=\"zh-sub\">（那天稍晚，克萊兒正在摺衣服。）</span>" },
+          { type: "sentence", sid: "s1", text: "Look! My new shirt shrank! Why is that?", html: "<span class=\"speaker-name\">Claire:</span> Look! My new shirt <span class=\"clue-number\">shrank</span>! Why is that?<span class=\"zh-sub\">你看！我的新襯衫縮水了！為什麼會這樣？</span>" },
+          { type: "sentence", sid: "s2", text: "Maybe it is because we dried it in the dryer.", html: "<span class=\"speaker-name mike\">Mike:</span> Maybe it's <span class=\"clue-number\">because</span> we dried it in the dryer.<span class=\"zh-sub\">也許是因為我們把它放進烘乾機裡烘乾了。</span>" },
+          { type: "sentence", sid: "s3", text: "How is that possible? It is not even a sweater!", html: "<span class=\"speaker-name\">Claire:</span> How is that possible? It's not even a sweater!<span class=\"zh-sub\">這怎麼可能？它甚至不是一件毛衣！</span>" },
+          { type: "sentence", sid: "s4", text: "Let us check the care label. It has directions about washing and drying it.", html: "<span class=\"speaker-name mike\">Mike:</span> Let's check the <span class=\"phrase-highlight\">care label</span>. It has directions about washing and drying it.<span class=\"zh-sub\">我們來檢查一下洗標吧。上面有關於清洗和烘乾的說明。</span>" },
+          { type: "note", html: "（Claire <span class=\"phrase-highlight\">pulls out</span> the care label.）<span class=\"zh-sub\">（克萊兒拉出了洗標。）</span>" },
+          { type: "sentence", sid: "s5", text: "What does this mean? It shows a square, a circle, and a big X!", html: "<span class=\"speaker-name\">Claire:</span> What does this mean? It shows <span class=\"clue-number\">a square, a circle, and a big X</span>!<span class=\"zh-sub\">這是什麼意思？上面畫了一個正方形、一個圓圈和一個大叉叉！</span>" },
+          { type: "sentence", sid: "s6", text: "That symbol means do not tumble dry.", html: "<span class=\"speaker-name mike\">Mike:</span> That symbol means \"<span class=\"phrase-highlight\">do not tumble dry</span>.\"<span class=\"zh-sub\">那個符號的意思是「不可滾筒烘乾」。</span>" },
+          { type: "sentence", sid: "s7", text: "Oh, no. We tumble dried it at the laundromat. No wonder!", html: "<span class=\"speaker-name\">Claire:</span> Oh, no. We <span class=\"phrase-highlight\">tumble dried</span> it at the laundromat. <span class=\"phrase-highlight\">No wonder</span>!<span class=\"zh-sub\">喔，不。我們在自助洗衣店用滾筒烘乾了。難怪！</span>" },
+          { type: "sentence", sid: "s8", text: "Be careful next time, or your clothes will shrink to kids sizes again!", html: "<span class=\"speaker-name mike\">Mike:</span> Be careful next time, <span class=\"clue-number\">or</span> your clothes will shrink to kids' sizes again!<span class=\"zh-sub\">下次小心點，否則你的衣服又會縮水成童裝尺寸了！</span>" }
+        ],
+        phraseSectionTitle: "💡 本課核心片語（點小喇叭聽發音／點卡片看中文）",
+        phrases: [
+          { speak: "care label", en: "care label", kk: "[kɛr ˈlebḷ]", zhTitle: "衣物洗標（洗滌說明標籤）", zhEx: "例：Let's check the care label." },
+          { speak: "pull out", en: "pull out", kk: "[pʊl aʊt]", zhTitle: "拉出；拿出；抽出", zhEx: "例：Claire pulls out the care label." },
+          { speak: "tumble dry", en: "tumble dry", kk: "[ˈtʌmbḷ draɪ]", zhTitle: "滾筒烘乾（過去式 tumble dried）", zhEx: "例：That symbol means \"do not tumble dry.\"" },
+          { speak: "no wonder", en: "no wonder", kk: "[no ˈwʌndɚ]", zhTitle: "難怪；怪不得", zhEx: "例：We tumble dried it. No wonder!" }
+        ],
+        quizSectionTitle: "🎯 閱讀理解闖關（共 4 題）",
+        summaryIcon: "🏆",
+        summaryTitle: "太棒了！完成第 2 堂閱讀挑戰！",
+        summaryDesc: "你已經學會觀察<strong>洗標符號圖示</strong>，並利用關鍵字找出因果關係！",
+        summaryGrammar: "<strong>📌 本堂必考文法與動詞三態小複習：</strong><br>1. 不規則動詞三態：<strong>shrink - shrank - shrunk</strong>（縮小；縮水）<br>2. 說明原因：Maybe it's <strong>because</strong> we dried it in the dryer.<br>3. 祈使句＋or（否則就會……）：Be careful next time, <strong>or</strong> your clothes will shrink again!",
+        questions: [
+          {
+            type: "題型：細節定位",
+            questionText: "What happened to Claire's new shirt?",
+            tokens: [
+              { word: "What", isKey: true }, { word: "happened", isKey: false }, { word: "to", isKey: false },
+              { word: "Claire's", isKey: false }, { word: "new", isKey: true }, { word: "shirt?", isKey: true }
+            ],
+            keyHint: "提示：請圈出疑問詞「What（什麼）」以及主角物品「new（新的）」、「shirt（襯衫）」！",
+            targetSentences: ["s1"],
+            evidenceHint: "提示：在左側文章找出 Claire 驚呼「My new shirt...」的那一句！",
+            options: [
+              { text: "(A) It became dirty again.", correct: false },
+              { text: "(B) It shrank to a smaller size.", correct: true },
+              { text: "(C) It was lost at the laundromat.", correct: false },
+              { text: "(D) It changed from red to white.", correct: false }
+            ],
+            explanation: "✅ 正確答案是 (B)！文章第 1 句 Claire 說：'My new shirt shrank!'（我的新襯衫縮水了！），shrank 是 shrink 的過去式。"
+          },
+          {
+            type: "題型：符號與圖意理解",
+            questionText: "What does the symbol with a square, a circle, and a big X mean?",
+            tokens: [
+              { word: "What", isKey: true }, { word: "does", isKey: false }, { word: "the", isKey: false },
+              { word: "symbol", isKey: true }, { word: "with", isKey: false }, { word: "a", isKey: false },
+              { word: "square,", isKey: false }, { word: "a", isKey: false }, { word: "circle,", isKey: false },
+              { word: "and", isKey: false }, { word: "a", isKey: false }, { word: "big", isKey: false },
+              { word: "X", isKey: false }, { word: "mean?", isKey: true }
+            ],
+            keyHint: "提示：對照左上角的洗標圖卡，並圈出題目關鍵字「What（什麼）」、「symbol（符號）」和「mean（意思是）」！",
+            targetSentences: ["s6"],
+            evidenceHint: "提示：在左側文章找出 Mike 解釋「That symbol means...」的那一句！",
+            options: [
+              { text: "(A) Wash in hot water.", correct: false },
+              { text: "(B) Dry clean only.", correct: false },
+              { text: "(C) Do not tumble dry.", correct: true },
+              { text: "(D) Use high heat to dry.", correct: false }
+            ],
+            explanation: "✅ 正確答案是 (C)！對照洗標圖卡與第 6 句 Mike 的回答：'That symbol means do not tumble dry.'（那個符號的意思是『不可滾筒烘乾』）。"
+          },
+          {
+            type: "題型：因果推論",
+            questionText: "Why did Claire's new shirt shrink?",
+            tokens: [
+              { word: "Why", isKey: true }, { word: "did", isKey: false }, { word: "Claire's", isKey: false },
+              { word: "new", isKey: false }, { word: "shirt", isKey: false }, { word: "shrink?", isKey: true }
+            ],
+            keyHint: "提示：問原因要圈出「Why（為什麼）」和動作「shrink（縮水）」！",
+            targetSentences: ["s2", "s7"],
+            evidenceHint: "提示：在左側文章找出包含「because（因為）」或「tumble dried it」的句子！",
+            options: [
+              { text: "(A) Because she washed it by hand.", correct: false },
+              { text: "(B) Because it is a wool sweater.", correct: false },
+              { text: "(C) Because they tumble dried it in the dryer.", correct: true },
+              { text: "(D) Because she hung it on the balcony.", correct: false }
+            ],
+            explanation: "✅ 正確答案是 (C)！洗標上寫著不可滾筒烘乾，但第 7 句 Claire 說：'We tumble dried it at the laundromat. No wonder!'（我們在洗衣店用滾筒烘乾了，難怪會縮水！）。"
+          },
+          {
+            type: "題型：情境與警告推論",
+            questionText: "What will happen if Claire is NOT careful next time?",
+            tokens: [
+              { word: "What", isKey: true }, { word: "will", isKey: false }, { word: "happen", isKey: false },
+              { word: "if", isKey: false }, { word: "Claire", isKey: false }, { word: "is", isKey: false },
+              { word: "NOT", isKey: true }, { word: "careful", isKey: true }, { word: "next", isKey: false },
+              { word: "time?", isKey: false }
+            ],
+            keyHint: "提示：請圈出「What（什麼）」、「NOT（不）」和「careful（小心的）」！",
+            targetSentences: ["s8"],
+            evidenceHint: "提示：在左側文章最後一句找出 Mike 給的警告（Be careful next time, or...）！",
+            options: [
+              { text: "(A) Her clothes will shrink to kids' sizes again.", correct: true },
+              { text: "(B) The dryers will all be in use.", correct: false },
+              { text: "(C) Her clothes will stay wet and musty.", correct: false },
+              { text: "(D) The care label will fall off.", correct: false }
+            ],
+            explanation: "✅ 正確答案是 (A)！最後一句 'Be careful next time, or your clothes will shrink to kids' sizes again!'（下次小心點，否則你的衣服又會縮水成童裝尺寸了！）。"
+          }
+        ]
+      },
+
+      // -------------------- 第 3 堂 --------------------
+      {
+        id: "lesson3",
+        badge: "第 3 堂",
+        unitTitle: "Unit 8 (上): Whale Fall 鯨落的形成與定義",
+        pageTag: "課本 P.40",
+        cardDesc: "深海食物稀缺與鯨落定義、when 時間子句，以及 dead (adj.) 與 dies (v.) 詞性辨析。",
+        headerTitle: "📘 第 3 堂｜Unit 8 (上): Whale Fall 鯨落的形成與定義",
+        headerSub: "八年級閱讀策略互動站（課本 P.40）｜點擊小喇叭可聽真人語音朗讀",
+        strategySteps: ["① 看圖表/數量", "② 圈題目關鍵字", "③ 找文章證據句", "④ 選正確答案"],
+        leftPanelTitle: "📖 課文閱讀區（點擊句子可找證據）",
+        initialStatus: "💡 狀態列：請先觀察上方「深海生態與數量線索卡」，再按「🔊」小喇叭聽課文發音！",
+        testPhrase: "People call this a whale fall.",
+        preReadTitle: "👀 步驟 ① 讀前掃描圖示與數量線索（點擊圖卡觀察重點）：",
+        preReadType: "cards",
+        clueCards: [
+          { icon: "🌊🐠", label: "海洋生物多樣性", sub: "many kinds of life" },
+          { icon: "🌑🍽️", label: "深海海底食物量", sub: "has little food（很少食物）" },
+          { icon: "🐋⬇️🏠", label: "鯨落雙重功能", sub: "as food and a home" }
+        ],
+        articleItems: [
+          { type: "heading", html: "Whale Fall and the Circle of Life<span class=\"zh-sub\">一鯨落，萬物生（鯨落與生命循環）</span>" },
+          { type: "sentence", sid: "s1", text: "The ocean is home to many kinds of life.", html: "The ocean <span class=\"phrase-highlight\">is home to</span> <span class=\"clue-number\">many kinds of</span> life.<span class=\"zh-sub\">海洋是許多種類生命的家園（棲息地）。</span>" },
+          { type: "sentence", sid: "s2", text: "However, the deep ocean floor has little food.", html: "However, the <span class=\"phrase-highlight\">deep ocean floor</span> has <span class=\"clue-number\">little</span> food.<span class=\"zh-sub\">然而，深海海底幾乎沒有什麼食物。</span>" },
+          { type: "sentence", sid: "s3", text: "Surprisingly, a dead whale can help.", html: "Surprisingly, a <span class=\"clue-number\">dead</span> whale can help.<span class=\"zh-sub\">令人驚訝的是，一頭死去的鯨魚可以幫上忙。</span>" },
+          { type: "sentence", sid: "s4", text: "When a whale dies, it often falls to the ocean floor.", html: "<span class=\"clue-number\">When</span> a whale <span class=\"clue-number\">dies</span>, it often falls to the ocean floor.<span class=\"zh-sub\">當鯨魚死亡時，牠通常會沉落到海底。</span>" },
+          { type: "sentence", sid: "s5", text: "Many animals there then use it as food and a home.", html: "Many animals there then <span class=\"phrase-highlight\">use</span> it <span class=\"phrase-highlight\">as</span> food and a home.<span class=\"zh-sub\">那裡的許多動物接著會把牠當作食物和家園。</span>" },
+          { type: "sentence", sid: "s6", text: "People call this a whale fall.", html: "People call this a <span class=\"phrase-highlight\">whale fall</span>.<span class=\"zh-sub\">人們稱這個現象為「鯨落」。</span>" }
+        ],
+        phraseSectionTitle: "💡 本課核心片語（點小喇叭聽發音／點卡片看中文）",
+        phrases: [
+          { speak: "be home to", en: "be home to...", kk: "[bi hom tu]", zhTitle: "是……的棲息地／家園", zhEx: "例：The ocean is home to many kinds of life." },
+          { speak: "many kinds of", en: "many kinds of", kk: "[ˈmɛni kaɪndz əv]", zhTitle: "許多種類的……", zhEx: "例：many kinds of life（多種生物）" },
+          { speak: "ocean floor", en: "ocean floor", kk: "[ˈoʃən flɔr]", zhTitle: "海底；海床", zhEx: "例：the deep ocean floor（深海海底）" },
+          { speak: "use A as B", en: "use A as B", kk: "[juz e æz bi]", zhTitle: "把 A 當作 B 使用", zhEx: "例：use it as food and a home" }
+        ],
+        quizSectionTitle: "🎯 閱讀理解闖關（共 4 題）",
+        summaryIcon: "🏆",
+        summaryTitle: "太棒了！完成第 3 堂閱讀挑戰！",
+        summaryDesc: "你已經掌握了<strong>「鯨落（Whale Fall）」的形成原因與定義</strong>！",
+        summaryGrammar: "<strong>📌 本堂必考文法與詞性小複習：</strong><br>1. <strong>When 時間子句</strong>：<strong>When</strong> a whale dies, it often falls to the ocean floor.<br>2. <strong>詞性辨析</strong>：a <strong>dead</strong> whale（adj. 死亡的） vs. When a whale <strong>dies</strong>（v. 死亡）<br>3. <strong>數量修飾</strong>：<strong>little</strong> food（很少的食物，修飾不可數名詞 food）",
+        questions: [
+          {
+            type: "題型：細節定位",
+            questionText: "What is the deep ocean floor like according to the reading?",
+            tokens: [
+              { word: "What", isKey: true }, { word: "is", isKey: false }, { word: "the", isKey: false },
+              { word: "deep", isKey: true }, { word: "ocean", isKey: false }, { word: "floor", isKey: true },
+              { word: "like", isKey: false }, { word: "according", isKey: false }, { word: "to", isKey: false },
+              { word: "the", isKey: false }, { word: "reading?", isKey: false }
+            ],
+            keyHint: "提示：請圈出疑問詞「What（什麼）」和地點關鍵字「deep（深的）」、「floor（海底）」！",
+            targetSentences: ["s2"],
+            evidenceHint: "提示：在左側文章找出提到「the deep ocean floor」的那一句！",
+            options: [
+              { text: "(A) It is warm and full of sunlight.", correct: false },
+              { text: "(B) It has little food for animals.", correct: true },
+              { text: "(C) It has no animals living there.", correct: false },
+              { text: "(D) It is covered with green plants.", correct: false }
+            ],
+            explanation: "✅ 正確答案是 (B)！文章第 2 句指出：'However, the deep ocean floor has little food.'（然而，深海海底幾乎沒有食物）。"
+          },
+          {
+            type: "題型：因果與動作定位",
+            questionText: "What happens when a whale dies?",
+            tokens: [
+              { word: "What", isKey: true }, { word: "happens", isKey: false }, { word: "when", isKey: true },
+              { word: "a", isKey: false }, { word: "whale", isKey: false }, { word: "dies?", isKey: true }
+            ],
+            keyHint: "提示：請圈出「What（什麼）」、「when（當……時）」和關鍵動作「dies（死亡）」！",
+            targetSentences: ["s4"],
+            evidenceHint: "提示：在左側文章找出以「When a whale dies...」開頭的那一句！",
+            options: [
+              { text: "(A) It swims to the beach.", correct: false },
+              { text: "(B) It floats on the top of the ocean.", correct: false },
+              { text: "(C) It often falls to the ocean floor.", correct: true },
+              { text: "(D) It turns into a big rock.", correct: false }
+            ],
+            explanation: "✅ 正確答案是 (C)！文章第 4 句寫道：'When a whale dies, it often falls to the ocean floor.'（當鯨魚死亡時，牠通常會沉落到海底）。"
+          },
+          {
+            type: "題型：細節與用途理解",
+            questionText: "How do deep-sea animals use a dead whale?",
+            tokens: [
+              { word: "How", isKey: true }, { word: "do", isKey: false }, { word: "deep-sea", isKey: false },
+              { word: "animals", isKey: true }, { word: "use", isKey: true }, { word: "a", isKey: false },
+              { word: "dead", isKey: false }, { word: "whale?", isKey: false }
+            ],
+            keyHint: "提示：請圈出疑問詞「How（如何）」以及「animals（動物）」、「use（使用）」！",
+            targetSentences: ["s5"],
+            evidenceHint: "提示：在左側文章找出包含「use it as...（把牠當作……）」的那一句！",
+            options: [
+              { text: "(A) They use it as food and a home.", correct: true },
+              { text: "(B) They push it back to the top.", correct: false },
+              { text: "(C) They only use it to hide from sharks.", correct: false },
+              { text: "(D) They use it to clean the ocean floor.", correct: false }
+            ],
+            explanation: "✅ 正確答案是 (A)！文章第 5 句說：'Many animals there then use it as food and a home.'（那裡的許多動物接著會把牠當作食物和家園）。"
+          },
+          {
+            type: "題型：專有名詞定義",
+            questionText: "What do people call the event when a dead whale falls to the ocean floor and helps animals?",
+            tokens: [
+              { word: "What", isKey: true }, { word: "do", isKey: false }, { word: "people", isKey: true },
+              { word: "call", isKey: true }, { word: "the", isKey: false }, { word: "event", isKey: false },
+              { word: "when", isKey: false }, { word: "a", isKey: false }, { word: "dead", isKey: false },
+              { word: "whale", isKey: false }, { word: "falls", isKey: false }, { word: "to", isKey: false },
+              { word: "the", isKey: false }, { word: "ocean", isKey: false }, { word: "floor", isKey: false },
+              { word: "and", isKey: false }, { word: "helps", isKey: false }, { word: "animals?", isKey: false }
+            ],
+            keyHint: "提示：請圈出「What（什麼）」、「people（人們）」和動詞「call（稱呼）」！",
+            targetSentences: ["s6"],
+            evidenceHint: "提示：在左側文章最後一句找出「People call this...」的那一句！",
+            options: [
+              { text: "(A) An ocean floor.", correct: false },
+              { text: "(B) A sea life.", correct: false },
+              { text: "(C) A deep food.", correct: false },
+              { text: "(D) A whale fall.", correct: true }
+            ],
+            explanation: "✅ 正確答案是 (D)！最後一句 'People call this a whale fall.'（人們稱這個現象為『鯨落』）。"
+          }
+        ]
+      },
+
+      // -------------------- 第 4 堂 --------------------
+      {
+        id: "lesson4",
+        badge: "第 4 堂",
+        unitTitle: "Unit 8 (下): The Circle of Life 鯨落三階段演化",
+        pageTag: "課本 P.40–41",
+        cardDesc: "First → Then → Last 三階段順序線索、形容詞比較級 smaller / more 與名詞 death。",
+        headerTitle: "📘 第 4 堂｜Unit 8 (下): The Circle of Life 鯨落三階段演化",
+        headerSub: "八年級閱讀策略互動站（課本 P.40–41）｜點擊小喇叭可聽真人語音朗讀",
+        strategySteps: ["① 看圖表/順序詞", "② 圈題目關鍵字", "③ 找文章證據句", "④ 選正確答案"],
+        leftPanelTitle: "📖 課文閱讀區（點擊句子可找證據）",
+        initialStatus: "💡 狀態列：請先觀察上方「鯨落三階段順序圖卡（First → Then → Last）」，再按「🔊」聽發音！",
+        testPhrase: "Death brings new life.",
+        preReadTitle: "👀 步驟 ① 讀前掃描三階段順序線索（First → Then → Last）：",
+        preReadType: "cards",
+        clueCards: [
+          { icon: "1️⃣🦈", label: "First（第一階段）", sub: "large animals eat body" },
+          { icon: "2️⃣🦀", label: "Then（第二階段）", sub: "smaller animals eat the rest" },
+          { icon: "3️⃣🦠", label: "Last（第三階段）", sub: "bacteria break down bones" }
+        ],
+        articleItems: [
+          { type: "heading", html: "Three Parts of a Whale Fall<span class=\"zh-sub\">鯨落的三個階段與生命循環</span>" },
+          { type: "sentence", sid: "s1", text: "A whale fall can last dozens of years and happens in three parts.", html: "A whale fall can last <span class=\"phrase-highlight\">dozens of</span> years and happens in <span class=\"clue-number\">three parts</span>.<span class=\"zh-sub\">一場鯨落可以持續數十年，並且分為三個階段發生。</span>" },
+          { type: "sentence", sid: "s2", text: "First, large animals eat most of the whale's body.", html: "<span class=\"clue-number\">First</span>, large animals eat most of the whale's body.<span class=\"zh-sub\">首先，大型動物會吃掉鯨魚身體的大部分。</span>" },
+          { type: "sentence", sid: "s3", text: "Then, smaller animals eat the rest and live near the bones.", html: "<span class=\"clue-number\">Then</span>, <span class=\"clue-number\">smaller</span> animals eat <span class=\"phrase-highlight\">the rest</span> and live near the bones.<span class=\"zh-sub\">接著，體型較小的動物吃掉剩餘的部分，並住在骨頭附近。</span>" },
+          { type: "sentence", sid: "s4", text: "Last, bacteria break down the bones.", html: "<span class=\"clue-number\">Last</span>, bacteria <span class=\"phrase-highlight\">break down</span> the bones.<span class=\"zh-sub\">最後，細菌會分解這些骨頭。</span>" },
+          { type: "sentence", sid: "s5", text: "This lets out nutrients, and more animals can eat their fill!", html: "This <span class=\"phrase-highlight\">lets out</span> nutrients, and <span class=\"clue-number\">more</span> animals can <span class=\"phrase-highlight\">eat their fill</span>!<span class=\"zh-sub\">這會釋放出養分，讓更多的動物可以飽餐一頓！</span>" },
+          { type: "sentence", sid: "s6", text: "So, a whale fall shows nature's special circle: death brings new life.", html: "So, a whale fall shows nature's special circle: <span class=\"clue-number\">death</span> brings new life.<span class=\"zh-sub\">因此，鯨落展現了大自然特別的循環：死亡帶來了新生命。</span>" }
+        ],
+        phraseSectionTitle: "💡 本課核心片語（點小喇叭聽發音／點卡片看中文）",
+        phrases: [
+          { speak: "dozens of", en: "dozens of", kk: "[ˈdʌzənz əv]", zhTitle: "數十個；許多", zhEx: "例：last dozens of years（持續數十年）" },
+          { speak: "the rest", en: "the rest", kk: "[ðə rɛst]", zhTitle: "剩餘部分；其餘", zhEx: "例：smaller animals eat the rest" },
+          { speak: "break down", en: "break down", kk: "[brek daʊn]", zhTitle: "分解（三態：break - broke - broken）", zhEx: "例：bacteria break down the bones" },
+          { speak: "eat one's fill", en: "eat one's fill", kk: "[it wʌnz fɪl]", zhTitle: "飽餐一頓；吃個飽（搭配 let out 釋放）", zhEx: "例：more animals can eat their fill" }
+        ],
+        quizSectionTitle: "🎯 閱讀理解闖關（共 4 題）",
+        summaryIcon: "🏆",
+        summaryTitle: "太棒了！完成第 4 堂閱讀挑戰！",
+        summaryDesc: "你已經學會利用 <strong>First → Then → Last</strong> 順序線索破解科普文章！",
+        summaryGrammar: "<strong>📌 本堂必考文法與詞性小複習：</strong><br>1. <strong>形容詞比較級</strong>：small → <strong>smaller</strong>（單音節加 -er）；many / much → <strong>more</strong>（不規則變化）<br>2. <strong>死亡三詞性總整理</strong>：<strong>die</strong> (v.) 死亡 → <strong>dead</strong> (adj.) 死亡的 → <strong>death</strong> (n.) 死亡<br>3. <strong>順序連接詞</strong>：<strong>First</strong>（首先） → <strong>Then</strong>（接著） → <strong>Last</strong>（最後）",
+        questions: [
+          {
+            type: "題型：時間與數量細節",
+            questionText: "How long can a whale fall last?",
+            tokens: [
+              { word: "How", isKey: true }, { word: "long", isKey: true }, { word: "can", isKey: false },
+              { word: "a", isKey: false }, { word: "whale", isKey: false }, { word: "fall", isKey: false },
+              { word: "last?", isKey: true }
+            ],
+            keyHint: "提示：問時間長度要圈出「How（多）」、「long（久）」以及動詞「last（持續）」！",
+            targetSentences: ["s1"],
+            evidenceHint: "提示：在左側文章第一句找出包含「can last...」的那一句！",
+            options: [
+              { text: "(A) Only a few days.", correct: false },
+              { text: "(B) About three weeks.", correct: false },
+              { text: "(C) Dozens of years.", correct: true },
+              { text: "(D) Just one month.", correct: false }
+            ],
+            explanation: "✅ 正確答案是 (C)！文章第 1 句指出：'A whale fall can last dozens of years...'（一場鯨落可以持續數十年）。"
+          },
+          {
+            type: "題型：事件順序理解（第二階段）",
+            questionText: "What happens in the second part of a whale fall?",
+            tokens: [
+              { word: "What", isKey: true }, { word: "happens", isKey: false }, { word: "in", isKey: false },
+              { word: "the", isKey: false }, { word: "second", isKey: true }, { word: "part", isKey: true },
+              { word: "of", isKey: false }, { word: "a", isKey: false }, { word: "whale", isKey: false },
+              { word: "fall?", isKey: false }
+            ],
+            keyHint: "提示：請圈出「What（什麼）」以及順序關鍵字「second（第二）」、「part（部分）」！",
+            targetSentences: ["s3"],
+            evidenceHint: "提示：second part 對應順序詞「Then（接著）」，請在左側點出以 Then 開頭的那一句！",
+            options: [
+              { text: "(A) Large animals eat most of the whale's body.", correct: false },
+              { text: "(B) Smaller animals eat the rest and live near the bones.", correct: true },
+              { text: "(C) Bacteria break down all the bones.", correct: false },
+              { text: "(D) The whale falls to the deep ocean floor.", correct: false }
+            ],
+            explanation: "✅ 正確答案是 (B)！文章用 First / Then / Last 分三階段：第二階段（Then）是 'smaller animals eat the rest and live near the bones.'（較小的動物吃掉剩餘部分並住在骨頭附近）。"
+          },
+          {
+            type: "題型：事件順序與因果（第三階段）",
+            questionText: "What do bacteria do in the last part of a whale fall?",
+            tokens: [
+              { word: "What", isKey: true }, { word: "do", isKey: false }, { word: "bacteria", isKey: true },
+              { word: "do", isKey: false }, { word: "in", isKey: false }, { word: "the", isKey: false },
+              { word: "last", isKey: true }, { word: "part", isKey: false }, { word: "of", isKey: false },
+              { word: "a", isKey: false }, { word: "whale", isKey: false }, { word: "fall?", isKey: false }
+            ],
+            keyHint: "提示：請圈出「What（什麼）」、「bacteria（細菌）」和順序詞「last（最後）」！",
+            targetSentences: ["s4", "s5"],
+            evidenceHint: "提示：在左側文章找出以「Last, bacteria...」開頭的那一句！",
+            options: [
+              { text: "(A) They eat most of the whale's meat.", correct: false },
+              { text: "(B) They push the bones out of the ocean.", correct: false },
+              { text: "(C) They break down the bones and let out nutrients.", correct: true },
+              { text: "(D) They fight with larger animals.", correct: false }
+            ],
+            explanation: "✅ 正確答案是 (C)！第 4–5 句寫道：'Last, bacteria break down the bones. This lets out nutrients...'（最後，細菌分解骨頭並釋放出養分）。"
+          },
+          {
+            type: "題型：主旨與篇章結論",
+            questionText: "What lesson does a whale fall show about nature?",
+            tokens: [
+              { word: "What", isKey: true }, { word: "lesson", isKey: false }, { word: "does", isKey: false },
+              { word: "a", isKey: false }, { word: "whale", isKey: false }, { word: "fall", isKey: false },
+              { word: "show", isKey: true }, { word: "about", isKey: false }, { word: "nature?", isKey: true }
+            ],
+            keyHint: "提示：請圈出「What（什麼）」、動詞「show（展現）」和主題字「nature（大自然）」！",
+            targetSentences: ["s6"],
+            evidenceHint: "提示：在左側文章最後一句找出「a whale fall shows nature's special circle...」那一句！",
+            options: [
+              { text: "(A) Large animals are stronger than bacteria.", correct: false },
+              { text: "(B) Deep-sea animals never eat bones.", correct: false },
+              { text: "(C) Whales can live for dozens of years.", correct: false },
+              { text: "(D) Death brings new life in nature's circle.", correct: true }
+            ],
+            explanation: "✅ 正確答案是 (D)！文章最後一句總結：'So, a whale fall shows nature's special circle: death brings new life.'（死亡帶來了新生命）。"
+          }
+        ]
+      },
+
+      // -------------------- 第 5 堂 --------------------
+      {
+        id: "lesson5",
+        badge: "第 5 堂",
+        unitTitle: "Unit 9 Part 1: Aowanda 南投奧萬大賞楓",
+        pageTag: "課本 P.42",
+        cardDesc: "複合形容詞 one-kilometer、連綴動詞 turn/become、3 座瀑布與約 120 種鳥類。",
+        headerTitle: "📘 第 5 堂｜Unit 9 Part 1: Aowanda 南投奧萬大賞楓",
+        headerSub: "八年級閱讀策略互動站（課本 P.42）｜點擊小喇叭可聽真人語音朗讀",
+        strategySteps: ["① 看圖表/數字", "② 圈題目關鍵字", "③ 找文章證據句", "④ 選正確答案"],
+        leftPanelTitle: "📖 課文閱讀區（點擊句子可找證據）",
+        initialStatus: "💡 狀態列：請先掃描上方三張「數字線索卡（1公里、3座瀑布、120種鳥類）」，再按「🔊」聽發音！",
+        testPhrase: "Don't forget to stop by Aowanda!",
+        preReadTitle: "👀 步驟 ① 讀前掃描數字線索（點擊圖卡記住關鍵數字）：",
+        preReadType: "cards",
+        clueCards: [
+          { icon: "🍁🥾", label: "one-kilometer", sub: "1 公里長的楓葉步道" },
+          { icon: "💦3️⃣", label: "three waterfalls", sub: "3 座瀑布" },
+          { icon: "🐦120", label: "120 kinds of birds", sub: "約 120 種鳥類（含台灣藍鵲）" }
+        ],
+        articleItems: [
+          { type: "heading", html: "Nov. 19｜Aowanda National Forest Recreation Area<span class=\"zh-sub\">11月19日｜南投奧萬大國家森林遊樂區</span>" },
+          { type: "sentence", sid: "s1", text: "Every autumn, green maple leaves turn yellow and later become bright red.", html: "Every autumn, green maple leaves <span class=\"clue-number\">turn</span> yellow and later <span class=\"clue-number\">become</span> bright red.<span class=\"zh-sub\">每年秋天，綠色的楓葉會轉黃，之後變成鮮紅色。</span>" },
+          { type: "sentence", sid: "s2", text: "This is a special sight in Aowanda National Forest Recreation Area in Nantou.", html: "This is a special sight in Aowanda National Forest Recreation Area in Nantou.<span class=\"zh-sub\">這是南投奧萬大國家森林遊樂區裡一幅特別的景象。</span>" },
+          { type: "sentence", sid: "s3", text: "Along its famous one-kilometer maple trail grow many different kinds of maple trees.", html: "Along its famous <span class=\"clue-number\">one-kilometer</span> maple trail grow many different kinds of maple trees.<span class=\"zh-sub\">沿著它著名的一公里楓葉步道，生長著許多不同種類的楓樹。</span>" },
+          { type: "sentence", sid: "s4", text: "No wonder people call Aowanda the Home of Maple Leaves!", html: "<span class=\"phrase-highlight\">No wonder</span> people call Aowanda the Home of Maple Leaves!<span class=\"zh-sub\">難怪人們稱奧萬大為「楓葉的故鄉」！</span>" },
+          { type: "sentence", sid: "s5", text: "Walk on, and you will reach the Aowanda Suspension Bridge.", html: "<span class=\"phrase-highlight\">Walk on</span>, and you will reach the Aowanda Suspension Bridge.<span class=\"zh-sub\">繼續往前走，你就會抵達奧萬大吊橋。</span>" },
+          { type: "sentence", sid: "s6", text: "From there, the Wanda River, the forest, and the valley are in full view.", html: "From there, the Wanda River, the forest, and the valley are <span class=\"phrase-highlight\">in full view</span>.<span class=\"zh-sub\">從那裡望去，萬大溪、森林和山谷都一覽無遺。</span>" },
+          { type: "sentence", sid: "s7", text: "What is more, Aowanda is home to three waterfalls and about 120 kinds of birds.", html: "<span class=\"phrase-highlight\">What's more</span>, Aowanda is home to <span class=\"clue-number\">three</span> waterfalls and about <span class=\"clue-number\">120</span> kinds of birds.<span class=\"zh-sub\">此外，奧萬大也是三座瀑布和約 120 種鳥類的棲息地。</span>" },
+          { type: "sentence", sid: "s8", text: "Try to find the Taiwan blue magpie during your trip here!", html: "<span class=\"clue-number\">Try to find</span> the Taiwan blue magpie during your trip here!<span class=\"zh-sub\">你在這裡旅行期間，試著找找看台灣藍鵲吧！</span>" },
+          { type: "sentence", sid: "s9", text: "When you visit Nantou, don't forget to stop by Aowanda!", html: "When you visit Nantou, <span class=\"clue-number\">don't forget to</span> <span class=\"phrase-highlight\">stop by</span> Aowanda!<span class=\"zh-sub\">當你造訪南投時，別忘了順道拜訪奧萬大！</span>" }
+        ],
+        phraseSectionTitle: "💡 本課核心片語（點小喇叭聽發音／點卡片看中文）",
+        phrases: [
+          { speak: "walk on", en: "walk on", kk: "[wɔk ɑn]", zhTitle: "繼續往前走（V + on 表「繼續」）", zhEx: "例：Walk on, and you will reach the bridge." },
+          { speak: "in full view", en: "be in full view", kk: "[bi ɪn fʊl vju]", zhTitle: "一覽無遺；盡收眼底", zhEx: "例：The forest and valley are in full view." },
+          { speak: "What's more", en: "what's more", kk: "[hwɑts mɔr]", zhTitle: "此外；而且（放句首加逗號）", zhEx: "例：What's more, it is home to 120 kinds of birds." },
+          { speak: "stop by", en: "stop by", kk: "[stɑp baɪ]", zhTitle: "順道拜訪；順路經過", zhEx: "例：don't forget to stop by Aowanda!" }
+        ],
+        quizSectionTitle: "🎯 閱讀理解闖關（共 4 題）",
+        summaryIcon: "🏆",
+        summaryTitle: "太棒了！完成第 5 堂閱讀挑戰！",
+        summaryDesc: "你已經學會用<strong>數字線索（1公里、3座瀑布、120種鳥類）</strong>快速抓出景點重點！",
+        summaryGrammar: "<strong>📌 本堂必考文法小複習：</strong><br>1. <strong>連綴動詞＋形容詞</strong>：maple leaves <strong>turn</strong> yellow and <strong>become</strong> bright red.<br>2. <strong>複合形容詞（單位用單數）</strong>：a <strong>one-kilometer</strong> maple trail（一條一公里長的楓葉步道）<br>3. <strong>不定詞 to + V 當受詞</strong>：<strong>Try to find</strong>... / <strong>Don't forget to stop by</strong>...",
+        questions: [
+          {
+            type: "題型：數字細節定位",
+            questionText: "How long is the famous maple trail in Aowanda?",
+            tokens: [
+              { word: "How", isKey: true }, { word: "long", isKey: true }, { word: "is", isKey: false },
+              { word: "the", isKey: false }, { word: "famous", isKey: false }, { word: "maple", isKey: false },
+              { word: "trail", isKey: true }, { word: "in", isKey: false }, { word: "Aowanda?", isKey: false }
+            ],
+            keyHint: "提示：問長度要圈出「How（多）」、「long（長）」以及地點名詞「trail（步道）」！",
+            targetSentences: ["s3"],
+            evidenceHint: "提示：對照左上角的數字線索卡，在左側文章找出包含「maple trail」的那一句！",
+            options: [
+              { text: "(A) One kilometer.", correct: true },
+              { text: "(B) Three kilometers.", correct: false },
+              { text: "(C) Nineteen kilometers.", correct: false },
+              { text: "(D) 120 kilometers.", correct: false }
+            ],
+            explanation: "✅ 正確答案是 (A)！文章第 3 句指出：'Along its famous one-kilometer maple trail...'（沿著它著名的一公里楓葉步道），注意複合形容詞中 kilometer 不加 s。"
+          },
+          {
+            type: "題型：細節與地點理解",
+            questionText: "What can visitors see from the Aowanda Suspension Bridge?",
+            tokens: [
+              { word: "What", isKey: true }, { word: "can", isKey: false }, { word: "visitors", isKey: false },
+              { word: "see", isKey: true }, { word: "from", isKey: false }, { word: "the", isKey: false },
+              { word: "Aowanda", isKey: false }, { word: "Suspension", isKey: true }, { word: "Bridge?", isKey: true }
+            ],
+            keyHint: "提示：請圈出「What（什麼）」、動詞「see（看見）」和地標「Suspension（吊）」、「Bridge（橋）」！",
+            targetSentences: ["s6"],
+            evidenceHint: "提示：在左側文章找出接在吊橋後面、包含「in full view（一覽無遺）」的那一句！",
+            options: [
+              { text: "(A) Hot springs and butterfly gardens.", correct: false },
+              { text: "(B) The Wanda River, the forest, and the valley.", correct: true },
+              { text: "(C) Over 100 kinds of flowers.", correct: false },
+              { text: "(D) The ocean and many whales.", correct: false }
+            ],
+            explanation: "✅ 正確答案是 (B)！文章第 6 句說：'From there, the Wanda River, the forest, and the valley are in full view.'（從吊橋那裡望去，萬大溪、森林和山谷都一覽無遺）。"
+          },
+          {
+            type: "題型：數字細節配對",
+            questionText: "How many kinds of birds is Aowanda home to?",
+            tokens: [
+              { word: "How", isKey: true }, { word: "many", isKey: true }, { word: "kinds", isKey: false },
+              { word: "of", isKey: false }, { word: "birds", isKey: true }, { word: "is", isKey: false },
+              { word: "Aowanda", isKey: false }, { word: "home", isKey: false }, { word: "to?", isKey: false }
+            ],
+            keyHint: "提示：問數量要圈出「How（多少）」、「many（數量）」和動物「birds（鳥類）」！",
+            targetSentences: ["s7"],
+            evidenceHint: "提示：在左側文章找出包含「three waterfalls and about...」的那一句！",
+            options: [
+              { text: "(A) About 3.", correct: false },
+              { text: "(B) About 19.", correct: false },
+              { text: "(C) About 120.", correct: true },
+              { text: "(D) About 100.", correct: false }
+            ],
+            explanation: "✅ 正確答案是 (C)！文章第 7 句寫道：'Aowanda is home to three waterfalls and about 120 kinds of birds.'（奧萬大有 3 座瀑布和約 120 種鳥類）。"
+          },
+          {
+            type: "題型：文章細節推論",
+            questionText: "Why do people call Aowanda 'the Home of Maple Leaves'?",
+            tokens: [
+              { word: "Why", isKey: true }, { word: "do", isKey: false }, { word: "people", isKey: false },
+              { word: "call", isKey: false }, { word: "Aowanda", isKey: false }, { word: "'the", isKey: false },
+              { word: "Home", isKey: true }, { word: "of", isKey: false }, { word: "Maple", isKey: true },
+              { word: "Leaves'?", isKey: true }
+            ],
+            keyHint: "提示：請圈出疑問詞「Why（為什麼）」和稱號「Home」、「Maple」、「Leaves'」！",
+            targetSentences: ["s1", "s3", "s4"],
+            evidenceHint: "提示：在左側文章找出提到「many different kinds of maple trees」或「No wonder people call...」的句子！",
+            options: [
+              { text: "(A) Because it has the longest suspension bridge in Taiwan.", correct: false },
+              { text: "(B) Because many different kinds of maple trees grow there and turn colorful in autumn.", correct: true },
+              { text: "(C) Because Taiwan blue magpies only live in maple trees.", correct: false },
+              { text: "(D) Because visitors can soak in warm hot springs there.", correct: false }
+            ],
+            explanation: "✅ 正確答案是 (B)！因為每到秋天楓葉會轉黃變紅，且步道旁生長著許多不同種類的楓樹（many different kinds of maple trees），難怪被稱為「楓葉的故鄉」。"
+          }
+        ]
+      },
+
+      // -------------------- 第 6 堂 --------------------
+      {
+        id: "lesson6",
+        badge: "第 6 堂",
+        unitTitle: "Unit 9 Part 2: Guanziling 台南關子嶺紅葉公園",
+        pageTag: "課本 P.43",
+        cardDesc: "楓葉變色兩大條件、超過 100 種蝴蝶、關子嶺溫泉與祈使句＋and 句型。",
+        headerTitle: "📘 第 6 堂｜Unit 9 Part 2: Guanziling 台南關子嶺紅葉公園",
+        headerSub: "八年級閱讀策略互動站（課本 P.43）｜點擊小喇叭可聽真人語音朗讀",
+        strategySteps: ["① 看圖表/條件數字", "② 圈題目關鍵字", "③ 找文章證據句", "④ 選正確答案"],
+        leftPanelTitle: "📖 課文閱讀區（點擊句子可找證據）",
+        initialStatus: "💡 狀態列：請先掃描上方三張「關子嶺自然條件與數量卡（日夜溫差＋冷風、over 100 蝴蝶、溫泉）」，再按「🔊」聽發音！",
+        testPhrase: "Check out Tainan's Guanziling Hongye Park!",
+        preReadTitle: "👀 步驟 ① 讀前掃描自然條件與數字線索（點擊圖卡觀察重點）：",
+        preReadType: "cards",
+        clueCards: [
+          { icon: "🌡️🌬️", label: "楓葉變色兩大條件", sub: "日夜溫差大＋冷風吹拂" },
+          { icon: "🦋100+", label: "over 100 species", sub: "超過 100 種蝴蝶物種" },
+          { icon: "♨️🧖", label: "famous for hot springs", sub: "以溫泉聞名（泡暖湯休息）" }
+        ],
+        articleItems: [
+          { type: "heading", html: "Nov. 20｜Guanziling Hongye Park<span class=\"zh-sub\">11月20日｜台南關子嶺紅葉公園</span>" },
+          { type: "sentence", sid: "s1", text: "Can't get enough of maples? Check out Tainan's Guanziling Hongye Park!", html: "<span class=\"phrase-highlight\">Can't get enough of</span> maples? <span class=\"phrase-highlight\">Check out</span> Tainan's Guanziling Hongye Park!<span class=\"zh-sub\">賞楓還看不夠嗎？去看看台南的關子嶺紅葉公園吧！</span>" },
+          { type: "sentence", sid: "s2", text: "The park sits high on Zhentou Mountain.", html: "The park sits high on Zhentou Mountain.<span class=\"zh-sub\">這座公園坐落在枕頭山的高處。</span>" },
+          { type: "sentence", sid: "s3", text: "Up there, day and night temperatures change greatly.", html: "Up there, <span class=\"clue-number\">day and night temperatures</span> change greatly.<span class=\"zh-sub\">在山上那裡，日夜溫差變化很大。</span>" },
+          { type: "sentence", sid: "s4", text: "Cold wind also blows through many areas in the park.", html: "<span class=\"clue-number\">Cold wind</span> <span class=\"clue-number\">also</span> blows through many areas in the park.<span class=\"zh-sub\">冷風也吹過公園裡的許多區域。</span>" },
+          { type: "sentence", sid: "s5", text: "Together, these conditions turn the leaves different colors.", html: "Together, these conditions turn the leaves different colors.<span class=\"zh-sub\">這些條件加在一起，讓樹葉變成了不同的顏色。</span>" },
+          { type: "sentence", sid: "s6", text: "So, you can see gold, orange, and deep red leaves all at once!", html: "So, you can see gold, orange, and deep red leaves <span class=\"phrase-highlight\">all at once</span>!<span class=\"zh-sub\">所以，你可以一口氣同時看到金色、橘色和深紅色的樹葉！</span>" },
+          { type: "sentence", sid: "s7", text: "Besides maples, the park has many flowers. These flowers give over 100 butterfly species a good home.", html: "<span class=\"clue-number\">Besides</span> maples, the park has many flowers. These flowers give <span class=\"clue-number\">over 100</span> butterfly species a good home.<span class=\"zh-sub\">除了楓樹之外，公園裡還有許多花朵。這些花為超過 100 種蝴蝶提供了良好的棲息地。</span>" },
+          { type: "sentence", sid: "s8", text: "Even better, Guanziling is famous for hot springs. After you enjoy the beautiful sights, soak in the warm water and rest.", html: "Even better, Guanziling <span class=\"phrase-highlight\">is famous for</span> hot springs. After you enjoy the beautiful sights, <span class=\"phrase-highlight\">soak in</span> the warm water and rest.<span class=\"zh-sub\">更棒的是，關子嶺以溫泉聞名。在你欣賞完美麗的風景後，泡在溫暖的水中好好休息吧。</span>" },
+          { type: "sentence", sid: "s9", text: "Head to Aowanda or Guanziling, and you will have the best autumn trip ever!", html: "<span class=\"phrase-highlight\">Head to</span> Aowanda or Guanziling, <span class=\"clue-number\">and</span> you will have the best autumn trip ever!<span class=\"zh-sub\">動身前往奧萬大或關子嶺，你將會擁有一趟史上最棒的秋天之旅！</span>" }
+        ],
+        phraseSectionTitle: "💡 本課核心片語（點小喇叭聽發音／點卡片看中文）",
+        phrases: [
+          { speak: "can't get enough of", en: "can't get enough of", kk: "[kænt gɛt ɪˈnʌf əv]", zhTitle: "對……再多都不膩；怎麼看都不夠", zhEx: "例：Can't get enough of maples?" },
+          { speak: "check out", en: "check out", kk: "[tʃɛk aʊt]", zhTitle: "去看看；查看；造訪", zhEx: "例：Check out Guanziling Hongye Park!" },
+          { speak: "all at once", en: "all at once", kk: "[ɔl æt wʌns]", zhTitle: "一口氣；同時；一下子", zhEx: "例：see gold, orange, and red leaves all at once" },
+          { speak: "soak in", en: "soak in", kk: "[sok ɪn]", zhTitle: "浸泡在……中（搭配 be famous for 以……聞名）", zhEx: "例：soak in the warm water and rest" }
+        ],
+        quizSectionTitle: "🎯 閱讀理解闖關（共 4 題）",
+        summaryIcon: "🏆",
+        summaryTitle: "太棒了！完成第 6 堂閱讀挑戰！",
+        summaryDesc: "你已經完全掌握<strong>關子嶺紅葉公園的變色條件、蝴蝶生態與溫泉特色</strong>！",
+        summaryGrammar: "<strong>📌 本堂必考文法小複習：</strong><br>1. <strong>「也」的用法位置</strong>：Cold wind <strong>also</strong> blows...（also 放一般動詞前；too 放句尾加逗號；as well 放句尾不加逗號）<br>2. <strong>祈使句＋and（那麼就會……）</strong>：<strong>Head to</strong> Aowanda or Guanziling, <strong>and</strong> you will have the best autumn trip ever!<br>3. <strong>單複數同形名詞</strong>：over 100 butterfly <strong>species</strong>（超過 100 種蝴蝶物種）",
+        questions: [
+          {
+            type: "題型：自然條件與因果",
+            questionText: "What turns the leaves different colors in Guanziling Hongye Park?",
+            tokens: [
+              { word: "What", isKey: true }, { word: "turns", isKey: true }, { word: "the", isKey: false },
+              { word: "leaves", isKey: false }, { word: "different", isKey: false }, { word: "colors", isKey: true },
+              { word: "in", isKey: false }, { word: "Guanziling", isKey: false }, { word: "Hongye", isKey: false },
+              { word: "Park?", isKey: false }
+            ],
+            keyHint: "提示：請圈出疑問詞「What（什麼）」、動詞「turns（使變成）」和「colors（顏色）」！",
+            targetSentences: ["s3", "s4", "s5"],
+            evidenceHint: "提示：對照左上角第一張線索卡，在左側文章點出提到「日夜溫差（day and night temperatures）」或「冷風（Cold wind）」的句子！",
+            options: [
+              { text: "(A) Heavy rain and warm ocean wind.", correct: false },
+              { text: "(B) Great day-and-night temperature changes and cold wind.", correct: true },
+              { text: "(C) Hot spring water and many butterflies.", correct: false },
+              { text: "(D) A one-kilometer suspension bridge.", correct: false }
+            ],
+            explanation: "✅ 正確答案是 (B)！文章第 3–5 句說明：日夜溫差變化大（day and night temperatures change greatly）加上冷風吹拂（Cold wind），讓樹葉變成金、橘、深紅等不同顏色。"
+          },
+          {
+            type: "題型：數字細節定位",
+            questionText: "How many butterfly species find a good home among the flowers in the park?",
+            tokens: [
+              { word: "How", isKey: true }, { word: "many", isKey: true }, { word: "butterfly", isKey: true },
+              { word: "species", isKey: false }, { word: "find", isKey: false }, { word: "a", isKey: false },
+              { word: "good", isKey: false }, { word: "home", isKey: false }, { word: "among", isKey: false },
+              { word: "the", isKey: false }, { word: "flowers", isKey: false }, { word: "in", isKey: false },
+              { word: "the", isKey: false }, { word: "park?", isKey: false }
+            ],
+            keyHint: "提示：問數量要圈出「How（多少）」、「many（數量）」和動物「butterfly（蝴蝶）」！",
+            targetSentences: ["s7"],
+            evidenceHint: "提示：對照左上角第二張數字線索卡，在左側文章找出包含「over 100...」的那一句！",
+            options: [
+              { text: "(A) About 20.", correct: false },
+              { text: "(B) Exactly 100.", correct: false },
+              { text: "(C) Over 100.", correct: true },
+              { text: "(D) Around 120.", correct: false }
+            ],
+            explanation: "✅ 正確答案是 (C)！文章第 7 句指出：'These flowers give over 100 butterfly species a good home.'（超過 100 種蝴蝶，注意和奧萬大的 120 種鳥類區分清楚喔！）。"
+          },
+          {
+            type: "題型：觀光特色與活動定位",
+            questionText: "What else is Guanziling famous for besides maples and flowers?",
+            tokens: [
+              { word: "What", isKey: true }, { word: "else", isKey: false }, { word: "is", isKey: false },
+              { word: "Guanziling", isKey: false }, { word: "famous", isKey: true }, { word: "for", isKey: true },
+              { word: "besides", isKey: false }, { word: "maples", isKey: false }, { word: "and", isKey: false },
+              { word: "flowers?", isKey: false }
+            ],
+            keyHint: "提示：請圈出疑問詞「What（什麼）」和片語「famous（有名的）」、「for（因為……）」！",
+            targetSentences: ["s8"],
+            evidenceHint: "提示：在左側文章找出包含「is famous for...（以……聞名）」的那一句！",
+            options: [
+              { text: "(A) Hot springs.", correct: true },
+              { text: "(B) Three waterfalls.", correct: false },
+              { text: "(C) Taiwan blue magpies.", correct: false },
+              { text: "(D) Whale falls.", correct: false }
+            ],
+            explanation: "✅ 正確答案是 (A)！文章第 8 句說：'Even better, Guanziling is famous for hot springs.'（更棒的是，關子嶺以溫泉聞名，賞景後還可以泡暖湯休息）。"
+          },
+          {
+            type: "題型：雙景點比較（奧萬大 vs. 關子嶺）",
+            questionText: "Which is TRUE about Aowanda and Guanziling?",
+            tokens: [
+              { word: "Which", isKey: true }, { word: "is", isKey: false }, { word: "TRUE", isKey: true },
+              { word: "about", isKey: false }, { word: "Aowanda", isKey: true }, { word: "and", isKey: false },
+              { word: "Guanziling?", isKey: true }
+            ],
+            keyHint: "提示：比較題要圈出「Which（哪一個）」、「TRUE（正確的）」以及兩個地名「Aowanda」、「Guanziling」！",
+            targetSentences: ["s6", "s9"],
+            evidenceHint: "提示：在左側文章找出能同時看到「金色、橘色、深紅色樹葉（gold, orange, and deep red leaves）」的那一句！",
+            options: [
+              { text: "(A) Both parks are in Tainan.", correct: false },
+              { text: "(B) Visitors can see gold, orange, and deep red leaves all at once in Guanziling.", correct: true },
+              { text: "(C) Guanziling has a famous suspension bridge over the Wanda River.", correct: false },
+              { text: "(D) Aowanda is famous for its warm hot springs.", correct: false }
+            ],
+            explanation: "✅ 正確答案是 (B)！奧萬大在南投（有吊橋、萬大溪、3座瀑布、120種鳥類）；關子嶺在台南（可同時看到金、橘、深紅三色楓葉，且有超過100種蝴蝶與溫泉）。"
+          }
+        ]
+      },
+
+      // -------------------- 第 7 堂 --------------------
+      {
+        id: "lesson7",
+        badge: "第 7 堂｜總複習",
+        isReview: true,
+        unitTitle: "U7–U9 總複習：跨單元閱讀闖關與段考綜合驗收",
+        pageTag: "U7–U9 精華整合",
+        cardDesc: "三單元核心對照表、跨單元高頻片語、段考綜合驗收 4 題與考前 30 秒速查表。",
+        headerTitle: "🏆 第 7 堂｜U7–U9 總複習：跨單元閱讀闖關與段考綜合驗收",
+        headerSub: "八年級第二次段考總複習互動站（Unit 7–9 精華整合）｜完成 7 堂全系列挑戰！",
+        strategySteps: ["① 看圖表/數字", "② 圈題目關鍵字", "③ 找文章證據句", "④ 選正確答案"],
+        leftPanelTitle: "📖 跨單元精華區（點擊句子可找證據）",
+        initialStatus: "💡 狀態列：先看下方「U7–U9 跨單元核心對照表」，再挑戰右側 4 道段考綜合題！",
+        testPhrase: "You will have the best autumn trip ever!",
+        preReadTitle: "👀 步驟 ① 讀前掃描三單元關鍵數字與文法表格：",
+        preReadType: "table",
+        articleItems: [
+          { type: "divider", html: "📘 Unit 7 核心句（過去式、洗標符號與祈使句＋or）" },
+          { type: "sentence", sid: "u7_1", text: "I hung these clothes up days ago, and my new shirt shrank in the dryer.", html: "I <span class=\"clue-number\">hung</span> these clothes up days ago, and my new shirt <span class=\"clue-number\">shrank</span> in the dryer.<span class=\"zh-sub\">我幾天前把衣服掛起來，而我的新襯衫在烘乾機裡縮水了。</span>" },
+          { type: "sentence", sid: "u7_2", text: "That symbol means do not tumble dry. Be careful next time, or your clothes will shrink again!", html: "That symbol means \"<span class=\"phrase-highlight\">do not tumble dry</span>.\" Be careful next time, <span class=\"clue-number\">or</span> your clothes will shrink again!<span class=\"zh-sub\">那個符號意思是「不可滾筒烘乾」。下次小心點，否則你的衣服又會縮水！</span>" },
+          { type: "divider", html: "🌊 Unit 8 核心句（鯨落三階段、比較級與詞性辨析）" },
+          { type: "sentence", sid: "u8_1", text: "First, large animals eat most of the whale's body. Then, smaller animals eat the rest.", html: "<span class=\"clue-number\">First</span>, large animals eat most of the whale's body. <span class=\"clue-number\">Then</span>, <span class=\"clue-number\">smaller</span> animals eat <span class=\"phrase-highlight\">the rest</span>.<span class=\"zh-sub\">首先，大型動物吃掉鯨魚身體的大部分。接著，較小的動物吃掉剩餘的部分。</span>" },
+          { type: "sentence", sid: "u8_2", text: "Last, bacteria break down the bones and let out nutrients. So, death brings new life.", html: "<span class=\"clue-number\">Last</span>, bacteria <span class=\"phrase-highlight\">break down</span> the bones and <span class=\"phrase-highlight\">let out</span> nutrients. So, <span class=\"clue-number\">death</span> brings new life.<span class=\"zh-sub\">最後，細菌分解骨頭並釋放出養分。因此，死亡帶來新生命。</span>" },
+          { type: "divider", html: "🍁 Unit 9 核心句（複合形容詞、連綴動詞與祈使句＋and）" },
+          { type: "sentence", sid: "u9_1", text: "Along Aowanda's one-kilometer trail, green leaves turn yellow and become bright red.", html: "Along Aowanda's <span class=\"clue-number\">one-kilometer</span> trail, green leaves <span class=\"clue-number\">turn</span> yellow and <span class=\"clue-number\">become</span> bright red.<span class=\"zh-sub\">沿著奧萬大的一公里步道，綠葉轉黃並變成鮮紅色。</span>" },
+          { type: "sentence", sid: "u9_2", text: "Guanziling is famous for hot springs. Head to Aowanda or Guanziling, and you will have the best autumn trip ever!", html: "Guanziling <span class=\"phrase-highlight\">is famous for</span> hot springs. Head to Aowanda or Guanziling, <span class=\"clue-number\">and</span> you will have the best autumn trip ever!<span class=\"zh-sub\">關子嶺以溫泉聞名。前往奧萬大或關子嶺，你將會擁有最棒的秋天之旅！</span>" }
+        ],
+        phraseSectionTitle: "💡 段考高頻片語總複習（點小喇叭聽發音／點卡片看中文）",
+        phrases: [
+          { speak: "be to blame", en: "be to blame (U7)", kk: "[bi tə blem]", zhTitle: "是……的原因（罪魁禍首）", zhEx: "例：The rainy weather is to blame." },
+          { speak: "no wonder", en: "no wonder (U7/U9)", kk: "[no ˈwʌndɚ]", zhTitle: "難怪；怪不得（跨單元高頻片語）", zhEx: "例：No wonder people call it the Home of Maple Leaves!" },
+          { speak: "be home to", en: "be home to (U8/U9)", kk: "[bi hom tu]", zhTitle: "是……的棲息地／家園（跨單元高頻）", zhEx: "例：Aowanda is home to three waterfalls." },
+          { speak: "all at once", en: "all at once (U9)", kk: "[ɔl æt wʌns]", zhTitle: "一口氣；同時；一下子", zhEx: "例：see gold, orange, and red leaves all at once" }
+        ],
+        quizSectionTitle: "🎯 段考綜合驗收闖關（共 4 題）",
+        summaryIcon: "🎓🏆",
+        summaryTitle: "恭喜完成 7 堂課全部挑戰！",
+        summaryDesc: "你已經熟練掌握「<strong>看圖表數字 → 圈題目關鍵字 → 找文章證據句 → 選答案</strong>」四大閱讀心法！",
+        summaryGrammar: "<strong>📋 八年級第二次段考 U7–U9 考前 30 秒速查表：</strong><br>• <strong>不規則動詞三態</strong>：hang - <strong>hung</strong> - hung ｜ shrink - <strong>shrank</strong> - shrunk ｜ break - <strong>broke</strong> - broken<br>• <strong>死亡三詞性</strong>：When a whale <strong>dies</strong> (v.) ｜ a <strong>dead</strong> whale (adj.) ｜ <strong>death</strong> (n.) brings new life<br>• <strong>形容詞比較級</strong>：small → <strong>smaller</strong> ｜ large → <strong>larger</strong> ｜ many/much → <strong>more</strong><br>• <strong>複合形容詞（單位單數）</strong>：a <strong>one-kilometer</strong> maple trail（不可加 s）<br>• <strong>祈使句連接詞</strong>：Walk on, <strong>and</strong> you will...（正面結果） vs. Be careful, <strong>or</strong> your clothes will...（否則）<br>• <strong>「也」的位置</strong>：<strong>also</strong>（句中：beV後/一般V前） ｜ <strong>too</strong>（句尾加逗號） ｜ <strong>as well</strong>（句尾不加逗號）",
+        summaryFinishBtnText: "🎓 查看 7 堂課結業總整理",
+        questions: [
+          {
+            type: "題型：U7 動詞三態與連接詞",
+            questionText: "Why did Claire's new shirt shrink at the laundromat?",
+            tokens: [
+              { word: "Why", isKey: true }, { word: "did", isKey: false }, { word: "Claire's", isKey: false },
+              { word: "new", isKey: false }, { word: "shirt", isKey: false }, { word: "shrink", isKey: true },
+              { word: "at", isKey: false }, { word: "the", isKey: false }, { word: "laundromat?", isKey: false }
+            ],
+            keyHint: "提示：請圈出疑問詞「Why（為什麼）」和關鍵動詞「shrink（縮水）」！",
+            targetSentences: ["u7_1", "u7_2"],
+            evidenceHint: "提示：在左側 Unit 7 區塊點出提到「shrank in the dryer」或「do not tumble dry」的句子！",
+            options: [
+              { text: "(A) Because she hung it up on the balcony for days.", correct: false },
+              { text: "(B) Because they tumble dried it in the dryer.", correct: true },
+              { text: "(C) Because she washed it with cold water.", correct: false },
+              { text: "(D) Because all the dryers were in use.", correct: false }
+            ],
+            explanation: "✅ 正確答案是 (B)！洗標符號代表 'do not tumble dry'（不可滾筒烘乾），但他們放進烘乾機烘乾，導致新襯衫縮水（shrank）。"
+          },
+          {
+            type: "題型：U8 比較級與順序演化",
+            questionText: "In a whale fall, which animals eat the rest of the whale and live near the bones?",
+            tokens: [
+              { word: "In", isKey: false }, { word: "a", isKey: false }, { word: "whale", isKey: false },
+              { word: "fall,", isKey: false }, { word: "which", isKey: true }, { word: "animals", isKey: true },
+              { word: "eat", isKey: false }, { word: "the", isKey: false }, { word: "rest", isKey: true },
+              { word: "of", isKey: false }, { word: "the", isKey: false }, { word: "whale", isKey: false },
+              { word: "and", isKey: false }, { word: "live", isKey: false }, { word: "near", isKey: false },
+              { word: "the", isKey: false }, { word: "bones?", isKey: false }
+            ],
+            keyHint: "提示：請圈出「which（哪一種）」、「animals（動物）」和關鍵片語「rest（剩餘部分）」！",
+            targetSentences: ["u8_1"],
+            evidenceHint: "提示：在左側 Unit 8 區塊找出包含「eat the rest」的那一句！",
+            options: [
+              { text: "(A) Large animals.", correct: false },
+              { text: "(B) Smaller animals.", correct: true },
+              { text: "(C) Bacteria.", correct: false },
+              { text: "(D) Taiwan blue magpies.", correct: false }
+            ],
+            explanation: "✅ 正確答案是 (B)！第一階段（First）是大型動物吃掉大部分；第二階段（Then）才是 'smaller animals eat the rest'（體型較小的動物吃掉剩餘部分）。"
+          },
+          {
+            type: "題型：U8 詞性與科普推論",
+            questionText: "How do bacteria help more deep-sea animals eat their fill?",
+            tokens: [
+              { word: "How", isKey: true }, { word: "do", isKey: false }, { word: "bacteria", isKey: true },
+              { word: "help", isKey: false }, { word: "more", isKey: false }, { word: "deep-sea", isKey: false },
+              { word: "animals", isKey: false }, { word: "eat", isKey: false }, { word: "their", isKey: false },
+              { word: "fill?", isKey: true }
+            ],
+            keyHint: "提示：請圈出疑問詞「How（如何）」、「bacteria（細菌）」和「fill（飽餐）」！",
+            targetSentences: ["u8_2"],
+            evidenceHint: "提示：在左側 Unit 8 區塊找出以「Last, bacteria...」開頭的那一句！",
+            options: [
+              { text: "(A) They break down the bones and let out nutrients.", correct: true },
+              { text: "(B) They carry the whale to the top of the ocean.", correct: false },
+              { text: "(C) They turn green leaves into bright red.", correct: false },
+              { text: "(D) They dry the bones with high heat.", correct: false }
+            ],
+            explanation: "✅ 正確答案是 (A)！最後階段細菌分解骨頭（break down the bones）並釋放出養分（let out nutrients），讓更多動物得以飽餐。"
+          },
+          {
+            type: "題型：U9 複合形容詞與文法綜合",
+            questionText: "Which sentence about Aowanda and Guanziling is grammatically and factually CORRECT?",
+            tokens: [
+              { word: "Which", isKey: true }, { word: "sentence", isKey: false }, { word: "about", isKey: false },
+              { word: "Aowanda", isKey: true }, { word: "and", isKey: false }, { word: "Guanziling", isKey: true },
+              { word: "is", isKey: false }, { word: "grammatically", isKey: false }, { word: "and", isKey: false },
+              { word: "factually", isKey: false }, { word: "CORRECT?", isKey: true }
+            ],
+            keyHint: "提示：請圈出「Which（哪一個）」、兩個景點「Aowanda」、「Guanziling」以及「CORRECT?（正確的）」！",
+            targetSentences: ["u9_1", "u9_2"],
+            evidenceHint: "提示：在左側 Unit 9 區塊點出包含「one-kilometer trail」或「is famous for hot springs」的句子！",
+            options: [
+              { text: "(A) Aowanda has a famous one-kilometers maple trail.", correct: false },
+              { text: "(B) Head to Guanziling, or you will enjoy warm hot springs.", correct: false },
+              { text: "(C) Along Aowanda's one-kilometer trail, green leaves turn yellow and become red.", correct: true },
+              { text: "(D) Guanziling is home to three waterfalls and 120 kinds of birds.", correct: false }
+            ],
+            explanation: "✅ 正確答案是 (C)！(A) 複合形容詞 one-kilometer 不可加 s；(B) 正面結果應用連接詞 and 而非 or；(D) 3 座瀑布與 120 種鳥類是奧萬大的特色。"
+          }
+        ]
+      }
+    ];
+
+    // ==================== 2. 狀態管理（保留每堂課作答進度） ====================
+    var activeLessonIndex = null;
+    var lessonStates = LESSONS.map(function(lesson) {
+      return {
+        currentQIndex: 0,
+        showingSummary: false,
+        checkedClues: [false, false, false],
+        questions: lesson.questions.map(function() {
+          return {
+            step: 1,
+            circledIndices: [],
+            foundEvidence: false,
+            answeredCorrectly: false,
+            selectedOption: null
+          };
+        })
+      };
+    });
+
+    // ==================== 3. 語音朗讀系統 ====================
+    var isReadingAll = false;
+    var availableVoices = [];
+    var currentUtterance = null;
+
+    function loadVoices() {
+      if (!("speechSynthesis" in window)) return;
+      var all = window.speechSynthesis.getVoices();
+      if (all && all.length > 0) {
+        availableVoices = all;
+      }
+      var select = document.getElementById("voiceSelect");
+      if (!select) return;
+
+      var enVoices = availableVoices.filter(function(v) {
+        return v.lang && v.lang.toLowerCase().indexOf("en") !== -1;
+      });
+      var list = enVoices.length > 0 ? enVoices : availableVoices;
+      var prev = select.value;
+
+      select.innerHTML = "";
+      if (list.length === 0) {
+        var opt0 = document.createElement("option");
+        opt0.value = "";
+        opt0.textContent = "預設英文語音";
+        select.appendChild(opt0);
+        return;
+      }
+
+      list.sort(function(a, b) {
+        return (a.lang === "en-US" ? 0 : 1) - (b.lang === "en-US" ? 0 : 1);
+      });
+
+      list.forEach(function(v) {
+        var opt = document.createElement("option");
+        opt.value = v.name;
+        opt.textContent = v.name.replace(/Microsoft |Google |Apple /g, "") + " (" + v.lang + ")";
+        select.appendChild(opt);
+      });
+
+      if (prev) {
+        select.value = prev;
+      }
+    }
+
+    if ("speechSynthesis" in window) {
+      loadVoices();
+      window.speechSynthesis.onvoiceschanged = loadVoices;
+    }
+
+    function stopAllSpeech() {
+      isReadingAll = false;
+      updateReadAllBtn();
+      if ("speechSynthesis" in window) {
+        window.speechSynthesis.cancel();
+      }
+      document.querySelectorAll(".sentence-row").forEach(function(r) {
+        r.classList.remove("speaking");
+      });
+    }
+
+    function setTtsStatus(msg, isError) {
+      var el = document.getElementById("ttsStatus");
+      if (el) {
+        el.textContent = msg;
+        el.style.color = isError ? "#dc2626" : "#1e40af";
+        el.style.background = isError ? "#fee2e2" : "#dbeafe";
+      }
+    }
+
+    function playBeep() {
+      try {
+        var AudioCtx = window.AudioContext || window.webkitAudioContext;
+        if (!AudioCtx) return;
+        var ctx = new AudioCtx();
+        var osc = ctx.createOscillator();
+        var gain = ctx.createGain();
+        osc.type = "sine";
+        osc.frequency.setValueAtTime(587.33, ctx.currentTime);
+        gain.gain.setValueAtTime(0.25, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.25);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start();
+        osc.stop(ctx.currentTime + 0.25);
+      } catch (e) {}
+    }
+
+    function getBestVoice() {
+      if (availableVoices.length === 0 && "speechSynthesis" in window) {
+        availableVoices = window.speechSynthesis.getVoices();
+      }
+      var sel = document.getElementById("voiceSelect");
+      var chosen = sel ? sel.value : "";
+      if (chosen) {
+        for (var i = 0; i < availableVoices.length; i++) {
+          if (availableVoices[i].name === chosen) return availableVoices[i];
+        }
+      }
+      for (var j = 0; j < availableVoices.length; j++) {
+        if (availableVoices[j].lang === "en-US") return availableVoices[j];
+      }
+      for (var k = 0; k < availableVoices.length; k++) {
+        if (availableVoices[k].lang && availableVoices[k].lang.toLowerCase().indexOf("en") === 0) {
+          return availableVoices[k];
+        }
+      }
+      return null;
+    }
+
+    function speakText(text, rowEl) {
+      if (!("speechSynthesis" in window)) {
+        setTtsStatus("⚠️ 您的瀏覽器不支援語音朗讀，請使用 Chrome / Edge / Safari。", true);
+        return;
+      }
+
+      isReadingAll = false;
+      updateReadAllBtn();
+      document.querySelectorAll(".sentence-row").forEach(function(r) {
+        r.classList.remove("speaking");
+      });
+
+      window.speechSynthesis.cancel();
+      if (window.speechSynthesis.paused) {
+        window.speechSynthesis.resume();
+      }
+
+      var utterance = new SpeechSynthesisUtterance(text);
+      currentUtterance = utterance;
+      utterance.lang = "en-US";
+      utterance.volume = 1.0;
+      var rateEl = document.getElementById("speechRate");
+      utterance.rate = rateEl ? parseFloat(rateEl.value) : 0.95;
+
+      var voice = getBestVoice();
+      if (voice) {
+        utterance.voice = voice;
+      }
+
+      setTtsStatus("🔊 正在送出語音：" + text);
+      if (rowEl) rowEl.classList.add("speaking");
+
+      utterance.onstart = function() {
+        setTtsStatus("🔊 正在朗讀：" + text);
+      };
+
+      utterance.onend = function() {
+        setTtsStatus("✅ 朗讀完畢！（可點擊任意小喇叭或片語聽發音）");
+        if (rowEl) rowEl.classList.remove("speaking");
+      };
+
+      utterance.onerror = function(e) {
+        if (rowEl) rowEl.classList.remove("speaking");
+        if (e.error !== "interrupted" && e.error !== "canceled") {
+          setTtsStatus("⚠️ 語音錯誤 (" + e.error + ")：請切換上方「語音選單」試試看。", true);
+        }
+      };
+
+      window.speechSynthesis.speak(utterance);
+    }
+
+    function toggleReadAll() {
+      if (isReadingAll) {
+        stopAllSpeech();
+        setTtsStatus("⏹️ 已停止全文朗讀");
+        return;
+      }
+
+      var rows = Array.from(document.querySelectorAll("#articleBox .sentence-row"));
+      if (rows.length === 0) return;
+
+      window.speechSynthesis.cancel();
+      isReadingAll = true;
+      updateReadAllBtn();
+      var idx = 0;
+
+      function playNext() {
+        if (!isReadingAll || idx >= rows.length) {
+          isReadingAll = false;
+          updateReadAllBtn();
+          rows.forEach(function(r) { r.classList.remove("speaking"); });
+          setTtsStatus("✅ 全文朗讀完成！");
+          return;
+        }
+        var currentRow = rows[idx];
+        var text = currentRow.getAttribute("data-text");
+        rows.forEach(function(r) { r.classList.remove("speaking"); });
+        currentRow.classList.add("speaking");
+
+        var u = new SpeechSynthesisUtterance(text);
+        currentUtterance = u;
+        u.lang = "en-US";
+        u.volume = 1.0;
+        var rateEl = document.getElementById("speechRate");
+        u.rate = rateEl ? parseFloat(rateEl.value) : 0.95;
+        var voice = getBestVoice();
+        if (voice) u.voice = voice;
+
+        setTtsStatus("🔊 全文朗讀中（第 " + (idx + 1) + " / " + rows.length + " 句）...");
+        u.onend = function() {
+          currentRow.classList.remove("speaking");
+          idx++;
+          playNext();
+        };
+        u.onerror = function(e) {
+          if (e.error !== "interrupted" && e.error !== "canceled") {
+            isReadingAll = false;
+            updateReadAllBtn();
+            setTtsStatus("⚠️ 全文朗讀中斷 (" + e.error + ")，請試著切換上方語音選單。", true);
+          }
+        };
+        window.speechSynthesis.speak(u);
+      }
+
+      playNext();
+    }
+
+    function updateReadAllBtn() {
+      var btn = document.getElementById("readAllBtn");
+      if (!btn) return;
+      if (isReadingAll) {
+        btn.innerHTML = "⏹️ 停止朗讀";
+        btn.classList.add("stop");
+      } else {
+        btn.innerHTML = "🔊 全文朗讀";
+        btn.classList.remove("stop");
+      }
+    }
+
+    // ==================== 4. 首頁大廳渲染與視圖切換 ====================
+    function renderHome() {
+      var grid = document.getElementById("lessonGrid");
+      grid.innerHTML = "";
+
+      var totalDone = 0;
+      var totalQuestions = 0;
+
+      LESSONS.forEach(function(lesson, idx) {
+        var lState = lessonStates[idx];
+        var doneCount = lState.questions.filter(function(q) { return q.answeredCorrectly; }).length;
+        var qTotal = lesson.questions.length;
+        totalDone += doneCount;
+        totalQuestions += qTotal;
+
+        var isCompleted = doneCount === qTotal;
+        var card = document.createElement("div");
+        card.className = "lesson-card" + (isCompleted ? " completed" : "") + (lesson.isReview ? " review-special" : "");
+
+        var statusHtml = isCompleted
+          ? "<span class=\"lesson-status done\">✅ 已完成 (" + doneCount + " / " + qTotal + " 題)</span>"
+          : (doneCount > 0
+            ? "<span class=\"lesson-status\">⏳ 進行中 (" + doneCount + " / " + qTotal + " 題)</span>"
+            : "<span class=\"lesson-status\">📝 尚未開始 (0 / " + qTotal + " 題)</span>");
+
+        card.innerHTML =
+          "<div>" +
+            "<div class=\"lesson-card-top\">" +
+              "<span class=\"lesson-badge\">" + lesson.badge + "</span>" +
+              "<span class=\"lesson-page-tag\">" + lesson.pageTag + "</span>" +
+            "</div>" +
+            "<div class=\"lesson-card-title\">" + lesson.unitTitle + "</div>" +
+            "<div class=\"lesson-card-desc\">" + lesson.cardDesc + "</div>" +
+          "</div>" +
+          "<div class=\"lesson-card-footer\">" +
+            statusHtml +
+            "<span class=\"enter-pill\">進入學習 ➔</span>" +
+          "</div>";
+
+        card.addEventListener("click", function() {
+          openLesson(idx);
+        });
+
+        grid.appendChild(card);
+      });
+
+      document.getElementById("overallProgressText").textContent = totalDone + " / " + totalQuestions + " 題完成";
+      var pct = totalQuestions > 0 ? Math.round((totalDone / totalQuestions) * 100) : 0;
+      document.getElementById("overallProgressBar").style.width = pct + "%";
+    }
+
+    function backToHome() {
+      stopAllSpeech();
+      activeLessonIndex = null;
+      document.getElementById("lessonView").style.display = "none";
+      document.getElementById("homeView").style.display = "block";
+      renderHome();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function openLesson(idx) {
+      stopAllSpeech();
+      activeLessonIndex = idx;
+      var lesson = LESSONS[idx];
+      var lState = lessonStates[idx];
+
+      document.getElementById("homeView").style.display = "none";
+      document.getElementById("lessonView").style.display = "block";
+      window.scrollTo({ top: 0, behavior: "smooth" });
+
+      // 設定頁首與策略步驟
+      document.getElementById("lessonHeaderTitle").textContent = lesson.headerTitle;
+      document.getElementById("lessonHeaderSub").textContent = lesson.headerSub;
+
+      var banner = document.getElementById("strategyBanner");
+      banner.innerHTML = "<span>🎯 閱讀四步驟：</span>" +
+        lesson.strategySteps.map(function(st) {
+          return "<span class=\"strategy-step\">" + st + "</span>";
+        }).join("");
+
+      document.getElementById("leftPanelTitle").textContent = lesson.leftPanelTitle;
+      setTtsStatus(lesson.initialStatus, false);
+
+      // 渲染讀前線索（圖卡或第 7 堂跨單元表格）
+      var preReadEl = document.getElementById("preReadSection");
+      preReadEl.innerHTML = "";
+
+      var preLabel = document.createElement("div");
+      preLabel.style.cssText = "font-size: 0.84rem; font-weight: 700; color: #1e40af; margin-bottom: 6px;";
+      preLabel.textContent = lesson.preReadTitle;
+      preReadEl.appendChild(preLabel);
+
+      if (lesson.preReadType === "table") {
+        var tableWrap = document.createElement("div");
+        tableWrap.className = "summary-table-wrap";
+        tableWrap.innerHTML =
+          "<table class=\"summary-table\">" +
+            "<thead><tr><th>單元主題</th><th>關鍵數字 / 符號線索</th><th>段考必考文法與三態</th></tr></thead>" +
+            "<tbody>" +
+              "<tr><td><span class=\"unit-tag\">U7</span>自助洗衣店</td><td>方框＋圓圈＋大X（不可烘乾）</td><td>hang-hung-hung / shrink-shrank-shrunk / 頻率副詞</td></tr>" +
+              "<tr><td><span class=\"unit-tag u8\">U8</span>一鯨落萬物生</td><td>dozens of years / three parts</td><td>比較級 smaller / 詞性 die(v.)-dead(adj.)-death(n.)</td></tr>" +
+              "<tr><td><span class=\"unit-tag u9\">U9</span>奧萬大＆關子嶺</td><td>1-km步道 / 3瀑布 / 120鳥 / 100+蝶</td><td>turn/become + adj. / 祈使句 + and/or / also, too, as well</td></tr>" +
+            "</tbody>" +
+          "</table>";
+        preReadEl.appendChild(tableWrap);
+      } else {
+        var cardsWrap = document.createElement("div");
+        cardsWrap.className = "clue-cards";
+        lesson.clueCards.forEach(function(c, cIdx) {
+          var cardDiv = document.createElement("div");
+          cardDiv.className = "clue-card" + (lState.checkedClues[cIdx] ? " checked" : "");
+          if (c.isSvgCareLabel) {
+            cardDiv.style.borderColor = "#f59e0b";
+            cardDiv.style.background = lState.checkedClues[cIdx] ? "#fef9c3" : "#fffbeb";
+            cardDiv.innerHTML =
+              "<svg width=\"44\" height=\"44\" viewBox=\"0 0 60 60\" style=\"margin-bottom:2px;\">" +
+                "<rect x=\"8\" y=\"8\" width=\"44\" height=\"44\" fill=\"none\" stroke=\"#1e293b\" stroke-width=\"4\" rx=\"4\"/>" +
+                "<circle cx=\"30\" cy=\"30\" r=\"15\" fill=\"none\" stroke=\"#1e293b\" stroke-width=\"4\"/>" +
+                "<line x1=\"6\" y1=\"6\" x2=\"54\" y2=\"54\" stroke=\"#dc2626\" stroke-width=\"5\" stroke-linecap=\"round\"/>" +
+                "<line x1=\"54\" y1=\"6\" x2=\"6\" y2=\"54\" stroke=\"#dc2626\" stroke-width=\"5\" stroke-linecap=\"round\"/>" +
+              "</svg>" +
+              "<div class=\"clue-label\" style=\"color:#b45309;\">" + c.label + "</div>" +
+              "<div class=\"clue-sub\">" + c.sub + "</div>";
+          } else {
+            cardDiv.innerHTML =
+              "<span class=\"clue-icon\">" + c.icon + "</span>" +
+              "<div class=\"clue-label\">" + c.label + "</div>" +
+              "<div class=\"clue-sub\">" + c.sub + "</div>";
+          }
+          cardDiv.addEventListener("click", function() {
+            lState.checkedClues[cIdx] = !lState.checkedClues[cIdx];
+            cardDiv.classList.toggle("checked");
+          });
+          cardsWrap.appendChild(cardDiv);
+        });
+        preReadEl.appendChild(cardsWrap);
+      }
+
+      // 渲染課文閱讀區
+      var articleBox = document.getElementById("articleBox");
+      articleBox.innerHTML = "";
+      lesson.articleItems.forEach(function(item) {
+        if (item.type === "heading") {
+          var hDiv = document.createElement("div");
+          hDiv.className = "article-heading";
+          hDiv.innerHTML = item.html;
+          articleBox.appendChild(hDiv);
+        } else if (item.type === "divider") {
+          var dDiv = document.createElement("div");
+          dDiv.className = "unit-divider";
+          dDiv.innerHTML = item.html;
+          articleBox.appendChild(dDiv);
+        } else if (item.type === "note") {
+          var nDiv = document.createElement("div");
+          nDiv.className = "stage-note";
+          nDiv.innerHTML = item.html;
+          articleBox.appendChild(nDiv);
+        } else if (item.type === "sentence") {
+          var row = document.createElement("div");
+          row.className = "sentence-row";
+          row.setAttribute("data-sid", item.sid);
+          row.setAttribute("data-text", item.text);
+
+          var speakBtn = document.createElement("button");
+          speakBtn.type = "button";
+          speakBtn.className = "mini-speak-btn";
+          speakBtn.title = "朗讀此句";
+          speakBtn.textContent = "🔊";
+          speakBtn.addEventListener("click", function(e) {
+            e.stopPropagation();
+            speakText(item.text, row);
+          });
+
+          var textDiv = document.createElement("div");
+          textDiv.className = "dialogue-text";
+          textDiv.innerHTML = item.html;
+
+          row.appendChild(speakBtn);
+          row.appendChild(textDiv);
+
+          row.addEventListener("click", function() {
+            handleSentenceClick(item.sid, row);
+          });
+
+          articleBox.appendChild(row);
+        }
+      });
+
+      // 渲染右側片語卡片區
+      document.getElementById("rightPhraseTitle").textContent = lesson.phraseSectionTitle;
+      var phraseGrid = document.getElementById("phraseGrid");
+      phraseGrid.innerHTML = "";
+      lesson.phrases.forEach(function(p) {
+        var card = document.createElement("div");
+        card.className = "phrase-card";
+        card.innerHTML =
+          "<div class=\"phrase-top\">" +
+            "<div>" +
+              "<div class=\"phrase-en\">" + p.en + "</div>" +
+              "<div class=\"phrase-kk\">" + p.kk + "</div>" +
+            "</div>" +
+            "<button type=\"button\" class=\"mini-speak-btn\" title=\"聽發音\">🔊</button>" +
+          "</div>" +
+          "<div class=\"phrase-meaning\">" +
+            "<span class=\"phrase-hidden-hint\">👆 點擊顯示中文解釋</span>" +
+            "<span class=\"phrase-zh\" style=\"display:none;\"><strong>" + p.zhTitle + "</strong><br><small>" + p.zhEx + "</small></span>" +
+          "</div>";
+
+        var spBtn = card.querySelector(".mini-speak-btn");
+        spBtn.addEventListener("click", function(e) {
+          e.stopPropagation();
+          speakText(p.speak);
+        });
+
+        card.addEventListener("click", function() {
+          card.classList.toggle("revealed");
+          var hint = card.querySelector(".phrase-hidden-hint");
+          var zh = card.querySelector(".phrase-zh");
+          if (card.classList.contains("revealed")) {
+            hint.style.display = "none";
+            zh.style.display = "inline";
+          } else {
+            hint.style.display = "inline";
+            zh.style.display = "none";
+          }
+        });
+
+        phraseGrid.appendChild(card);
+      });
+
+      // 渲染右側闖關區與總結畫面
+      document.getElementById("rightQuizTitle").textContent = lesson.quizSectionTitle;
+      buildSummaryCard(lesson, idx);
+
+      if (lState.showingSummary) {
+        document.getElementById("quizContainer").style.display = "none";
+        document.getElementById("summaryCard").classList.add("show");
+        updateScoreBadge();
+      } else {
+        document.getElementById("quizContainer").style.display = "block";
+        document.getElementById("summaryCard").classList.remove("show");
+        renderQuestion();
+      }
+    }
+
+    function buildSummaryCard(lesson, idx) {
+      var summaryCard = document.getElementById("summaryCard");
+      var hasNextLesson = idx < LESSONS.length - 1;
+      var nextLessonBtnHtml = hasNextLesson
+        ? "<button type=\"button\" class=\"btn-tts\" style=\"background:#16a34a; padding:10px 18px; font-size:0.95rem;\" id=\"goNextLessonBtn\">前往" + LESSONS[idx + 1].badge + " ➔</button>"
+        : "<button type=\"button\" class=\"btn-tts\" style=\"background:#16a34a; padding:10px 18px; font-size:0.95rem;\" id=\"summaryBackHomeBtn\">🔙 返回英雜課程總覽</button>";
+
+      summaryCard.innerHTML =
+        "<div style=\"font-size: 3rem; margin-bottom: 8px;\">" + lesson.summaryIcon + "</div>" +
+        "<h2 style=\"color: #1e3a8a; margin-bottom: 6px;\">" + lesson.summaryTitle + "</h2>" +
+        "<p style=\"color: #475569; margin-bottom: 14px; font-size: 0.94rem;\">" + lesson.summaryDesc + "</p>" +
+        "<div style=\"background: white; border: 1px solid #bfdbfe; border-radius: 10px; padding: 12px; text-align: left; font-size: 0.9rem; margin-bottom: 14px; line-height: 1.7;\">" +
+          lesson.summaryGrammar +
+        "</div>" +
+        "<div class=\"summary-actions\">" +
+          "<button type=\"button\" class=\"btn-tts\" style=\"padding: 10px 18px; font-size: 0.95rem;\" id=\"resetLessonBtn\">🔄 重新練習本堂</button>" +
+          nextLessonBtnHtml +
+        "</div>";
+
+      document.getElementById("resetLessonBtn").addEventListener("click", function() {
+        var lState = lessonStates[activeLessonIndex];
+        lState.showingSummary = false;
+        lState.currentQIndex = 0;
+        lState.questions.forEach(function(s) {
+          s.step = 1;
+          s.circledIndices = [];
+          s.foundEvidence = false;
+          s.answeredCorrectly = false;
+          s.selectedOption = null;
+        });
+        document.getElementById("quizContainer").style.display = "block";
+        document.getElementById("summaryCard").classList.remove("show");
+        renderQuestion();
+      });
+
+      var goNextBtn = document.getElementById("goNextLessonBtn");
+      if (goNextBtn) {
+        goNextBtn.addEventListener("click", function() {
+          openLesson(activeLessonIndex + 1);
+        });
+      }
+
+      var sumBackBtn = document.getElementById("summaryBackHomeBtn");
+      if (sumBackBtn) {
+        sumBackBtn.addEventListener("click", backToHome);
+      }
+    }
+
+    // ==================== 5. 單堂三步驟闖關互動邏輯 ====================
+    function updateScoreBadge() {
+      var lState = lessonStates[activeLessonIndex];
+      var doneCount = lState.questions.filter(function(s) { return s.answeredCorrectly; }).length;
+      document.getElementById("scoreBadge").textContent = "完成進度：" + doneCount + " / " + lState.questions.length;
+    }
+
+    function renderQuestion() {
+      if (activeLessonIndex === null) return;
+      var lesson = LESSONS[activeLessonIndex];
+      var lState = lessonStates[activeLessonIndex];
+      var qIdx = lState.currentQIndex;
+      var q = lesson.questions[qIdx];
+      var st = lState.questions[qIdx];
+
+      document.getElementById("qTypeBadge").textContent = q.type;
+      document.querySelectorAll(".q-tab").forEach(function(tab, i) {
+        tab.classList.remove("active", "done");
+        if (lState.questions[i].answeredCorrectly) tab.classList.add("done");
+        if (i === qIdx) tab.classList.add("active");
+      });
+
+      var p1 = document.getElementById("stepPill1");
+      var p2 = document.getElementById("stepPill2");
+      var p3 = document.getElementById("stepPill3");
+      var banner = document.getElementById("instructionBanner");
+
+      p1.className = "step-pill";
+      p2.className = "step-pill";
+      p3.className = "step-pill";
+
+      if (st.step === 1) {
+        p1.classList.add("current");
+        banner.className = "instruction-banner";
+        banner.innerHTML = "👉 <strong>步驟 1：</strong>請點擊題目中的「關鍵字」把它圈起來！<br><small style='font-weight:500;'>" + q.keyHint + "</small>";
+      } else if (st.step === 2) {
+        p1.classList.add("completed");
+        p2.classList.add("current");
+        banner.className = "instruction-banner step2";
+        banner.innerHTML = "🔍 <strong>步驟 2：</strong>太棒了！現在請到<strong>左側藍色文章區</strong>，點擊能回答這題的「證據句」！<br><small style='font-weight:500;'>" + q.evidenceHint + "</small>";
+      } else {
+        p1.classList.add("completed");
+        p2.classList.add("completed");
+        p3.classList.add(st.answeredCorrectly ? "completed" : "current");
+        banner.className = "instruction-banner step3";
+        banner.innerHTML = "✅ <strong>步驟 3：</strong>證據句已鎖定（左側黃底高亮）！請選出正確答案：";
+      }
+
+      document.querySelectorAll("#articleBox .sentence-row").forEach(function(row) {
+        var sid = row.getAttribute("data-sid");
+        row.classList.remove("seek-mode", "evidence-correct", "evidence-wrong");
+        if (st.step === 2) {
+          row.classList.add("seek-mode");
+        }
+        if (st.step >= 3 && q.targetSentences.indexOf(sid) !== -1) {
+          row.classList.add("evidence-correct");
+        }
+      });
+
+      var tokensContainer = document.getElementById("qTokens");
+      tokensContainer.innerHTML = "";
+      q.tokens.forEach(function(t, idx) {
+        var span = document.createElement("span");
+        span.className = "word-token";
+        span.textContent = t.word;
+        if (st.circledIndices.indexOf(idx) !== -1) {
+          span.classList.add("circled");
+        }
+        span.addEventListener("click", function() {
+          handleWordClick(idx, span);
+        });
+        tokensContainer.appendChild(span);
+      });
+
+      var optionsContainer = document.getElementById("optionsList");
+      optionsContainer.innerHTML = "";
+
+      if (st.step < 3) {
+        var lockDiv = document.createElement("div");
+        lockDiv.className = "options-locked-overlay";
+        lockDiv.innerHTML = st.step === 1
+          ? "🔒 選項已鎖定：請先完成「步驟 1：圈出題目關鍵字」"
+          : "🔒 選項已鎖定：請先完成「步驟 2：在左側文章點出證據句」";
+        optionsContainer.appendChild(lockDiv);
+      } else {
+        q.options.forEach(function(opt, oIdx) {
+          var btn = document.createElement("button");
+          btn.type = "button";
+          btn.className = "option-btn";
+          btn.textContent = opt.text;
+          if (st.answeredCorrectly) {
+            btn.disabled = true;
+            if (opt.correct) btn.classList.add("correct");
+          } else if (st.selectedOption === oIdx && !opt.correct) {
+            btn.classList.add("wrong");
+          }
+          btn.addEventListener("click", function() {
+            handleOptionClick(oIdx);
+          });
+          optionsContainer.appendChild(btn);
+        });
+      }
+
+      var fb = document.getElementById("feedbackBox");
+      var nextBtn = document.getElementById("nextBtn");
+      if (st.answeredCorrectly) {
+        fb.className = "feedback-box show success";
+        fb.innerHTML = q.explanation;
+        nextBtn.className = "next-btn show";
+        if (qIdx < lesson.questions.length - 1) {
+          nextBtn.textContent = "前往下一題 ➔";
+        } else {
+          nextBtn.textContent = lesson.summaryFinishBtnText || "🎉 查看本堂完成總結";
+        }
+      } else if (st.selectedOption !== null) {
+        fb.className = "feedback-box show error";
+        fb.innerHTML = "❌ 再想一想喔！請對照左側<strong>黃色高亮的證據句</strong>再選一次。";
+        nextBtn.className = "next-btn";
+      } else {
+        fb.className = "feedback-box";
+        nextBtn.className = "next-btn";
+      }
+
+      updateScoreBadge();
+    }
+
+    function handleWordClick(tokenIdx, spanEl) {
+      var lesson = LESSONS[activeLessonIndex];
+      var lState = lessonStates[activeLessonIndex];
+      var q = lesson.questions[lState.currentQIndex];
+      var st = lState.questions[lState.currentQIndex];
+      if (st.step > 1) return;
+
+      var tokenObj = q.tokens[tokenIdx];
+      if (tokenObj.isKey) {
+        if (st.circledIndices.indexOf(tokenIdx) === -1) {
+          st.circledIndices.push(tokenIdx);
+        }
+        var totalKeys = q.tokens.filter(function(t) { return t.isKey; }).length;
+        if (st.circledIndices.length >= totalKeys) {
+          st.step = 2;
+        }
+        renderQuestion();
+      } else {
+        spanEl.classList.remove("wrong-word");
+        void spanEl.offsetWidth;
+        spanEl.classList.add("wrong-word");
+      }
+    }
+
+    function handleSentenceClick(sid, rowEl) {
+      var lesson = LESSONS[activeLessonIndex];
+      var lState = lessonStates[activeLessonIndex];
+      var q = lesson.questions[lState.currentQIndex];
+      var st = lState.questions[lState.currentQIndex];
+      if (st.step !== 2) return;
+
+      if (q.targetSentences.indexOf(sid) !== -1) {
+        st.foundEvidence = true;
+        st.step = 3;
+        renderQuestion();
+      } else if (rowEl) {
+        rowEl.classList.remove("evidence-wrong");
+        void rowEl.offsetWidth;
+        rowEl.classList.add("evidence-wrong");
+      }
+    }
+
+    function handleOptionClick(optIdx) {
+      var lesson = LESSONS[activeLessonIndex];
+      var lState = lessonStates[activeLessonIndex];
+      var q = lesson.questions[lState.currentQIndex];
+      var st = lState.questions[lState.currentQIndex];
+      if (st.step < 3 || st.answeredCorrectly) return;
+
+      st.selectedOption = optIdx;
+      if (q.options[optIdx].correct) {
+        st.answeredCorrectly = true;
+        st.step = 4;
+      }
+      renderQuestion();
+    }
+
+    function switchQuestion(idx) {
+      var lState = lessonStates[activeLessonIndex];
+      lState.currentQIndex = idx;
+      lState.showingSummary = false;
+      document.getElementById("quizContainer").style.display = "block";
+      document.getElementById("summaryCard").classList.remove("show");
+      renderQuestion();
+    }
+
+    // ==================== 6. 初始化綁定 ====================
+    document.addEventListener("DOMContentLoaded", function() {
+      // 左上角返回鍵
+      document.getElementById("backHomeBtn").addEventListener("click", backToHome);
+
+      // 測試聲音按鈕
+      document.getElementById("testVoiceBtn").addEventListener("click", function() {
+        if (activeLessonIndex === null) return;
+        playBeep();
+        speakText(LESSONS[activeLessonIndex].testPhrase);
+      });
+
+      // 全文朗讀按鈕
+      document.getElementById("readAllBtn").addEventListener("click", toggleReadAll);
+
+      // 隱藏/顯示中文按鈕
+      document.getElementById("toggleZhBtn").addEventListener("click", function() {
+        document.body.classList.toggle("hide-zh");
+        var isHidden = document.body.classList.contains("hide-zh");
+        this.innerHTML = isHidden ? "👁️ 顯示中文" : "🙈 隱藏中文";
+      });
+
+      // 題目朗讀按鈕
+      document.getElementById("speakQuestionBtn").addEventListener("click", function() {
+        if (activeLessonIndex === null) return;
+        var lesson = LESSONS[activeLessonIndex];
+        var lState = lessonStates[activeLessonIndex];
+        speakText(lesson.questions[lState.currentQIndex].questionText);
+      });
+
+      // 題號頁籤
+      document.querySelectorAll(".q-tab").forEach(function(tab) {
+        tab.addEventListener("click", function() {
+          var idx = parseInt(tab.getAttribute("data-qidx"), 10);
+          switchQuestion(idx);
+        });
+      });
+
+      // 下一題按鈕
+      document.getElementById("nextBtn").addEventListener("click", function() {
+        if (activeLessonIndex === null) return;
+        var lesson = LESSONS[activeLessonIndex];
+        var lState = lessonStates[activeLessonIndex];
+        if (lState.currentQIndex < lesson.questions.length - 1) {
+          switchQuestion(lState.currentQIndex + 1);
+        } else {
+          lState.showingSummary = true;
+          document.getElementById("quizContainer").style.display = "none";
+          document.getElementById("summaryCard").classList.add("show");
+        }
+      });
+
+      // 初始顯示「英雜」主選單
+      renderHome();
+    });
+  </script>
+</body>
+</html>
